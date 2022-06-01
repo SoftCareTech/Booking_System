@@ -13,21 +13,76 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
+
+      Welcome: {
+        screens: {
+          WelcomScreen: "Welcome"
+        }
+      },
+      Profile: {
+        screens: {
+          TabProfileScreen: "Profile"
+        }
+      }
+      ,
+      Signin: {
+        screens: {
+          SigninScreen: "Signin"
+        }
+      },
+      Signup: {
+        screens: {
+          SignupScreen: "Signup"
+        }
+      },
+
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              TabHomeScreen: 'Home',
             },
           },
-          TabTwo: {
+          Search: {
             screens: {
-              TabTwoScreen: 'two',
+              TabSearchScreen: 'Search',
             },
           },
+          Appointment: {
+            screens: {
+              Appointment: {
+                screens: {
+                  Appointment: {
+                    screens: {
+                      AppointmentScreen: "Appointment"
+                    }
+                  },
+                  Payment: {
+                    screens: {
+                      PaymentScreen: "Payment"
+                    }
+                  },
+                  Note: {
+                    screens: {
+                      NoteScreen: "Note"
+                    }
+                  },
+                  ViewAppointments: {
+                    screens: {
+                      ViewAppointmentsScreen: "ViewAppointments"
+                    }
+                  },
+                }
+              },
+            },
+          },
+
+
+
         },
       },
-      Modal: 'modal',
+
+
       NotFound: '*',
     },
   },

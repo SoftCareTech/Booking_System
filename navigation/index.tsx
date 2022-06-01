@@ -8,16 +8,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
+
 import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
+
+import SigninScreen from '../screens/SigninScreen';
+import SignupScreen from '../screens/SignupScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import TabHomeScreen from '../screens/TabHomeScreen';
+import TabSearchScreen from '../screens/TabSearchScreen';
+import TabAppointmentScreen from '../screens/TabApointmentScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import PaymentScreen from '../screens/PaymentScreen';
+
+import { RootStackParamList, RootStackScreenProps, RootTabParamList, RootTabScreenProps, AppointmentStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import TabProfileScreen from '../screens/TabProfileScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -29,44 +38,52 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>();
 
 function RootNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='Welcome'>
+      <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Signin" component={SigninScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+      </Stack.Group>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
+
     </Stack.Navigator>
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
+function AppointmentStackNavigator() {
+  return (
+    <StackAppointment.Navigator>
+      <StackAppointment.Screen name="Appointment" component={TabAppointmentScreen} options={{ headerShown: false }} />
+      <StackAppointment.Screen name="Payment" component={TabAppointmentScreen} options={{ headerShown: false }} />
+      <StackAppointment.Screen name="Note" component={TabAppointmentScreen} options={{ headerShown: false }} />
+      <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
+    </StackAppointment.Navigator>
+  );
+}
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        name="Home"
+        component={TabHomeScreen}
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -85,10 +102,34 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Search"
+        component={TabSearchScreen}
         options={{
-          title: 'Tab Two',
+          title: 'Search',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Search"
+        component={TabSearchScreen}
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Appointment"
+        component={TabAppointmentScreen}
+        options={{
+          title: 'Appointment',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={TabProfileScreen}
+        options={{
+          title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
