@@ -28,6 +28,7 @@ import { RootStackParamList, RootStackScreenProps, RootTabParamList, RootTabScre
 import LinkingConfiguration from './LinkingConfiguration';
 import TabProfileScreen from '../screens/TabProfileScreen';
 import AppointmentDoneScreen from '../screens/AppointmentDone';
+import ViewAppointmentScreen from '../screens/ViewAppointments';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -45,7 +46,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Note'>
+    <Stack.Navigator initialRouteName='ViewAppointments'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
@@ -58,13 +59,24 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
-        <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="ViewAppointments" component={ViewAppointmentScreen} options={{ headerShown: false }} />
 
       </Stack.Group>
     </Stack.Navigator>
   );
 }
-
+function RootAppointment() {
+  const colorScheme = useColorScheme();
+  return (
+    <Stack.Navigator initialRouteName='ViewAppointments'>
+      <Stack.Group screenOptions={{ presentation: 'containedTransparentModal', headerShown: false }}>
+        <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="ViewAppointments" component={ViewAppointmentScreen} options={{ headerShown: false }} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+}
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 

@@ -34,7 +34,7 @@ export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = 
 
 
 
-const month = (i: number) => i === 0 ? "Jan" : i === 1 ? "Feb" : i === 2 ? "March" : i === 3 ? "Apr" :
+export const month = (i: number) => i === 0 ? "Jan" : i === 1 ? "Feb" : i === 2 ? "March" : i === 3 ? "Apr" :
   i === 4 ? "May" : i === 5 ? "Jun" : i === 6 ? "Jul" : i === 7 ? "Aug" :
     i === 8 ? "Sep" : i === 9 ? "Oct" : i === 10 ? "Nov" : i === 11 ? "Dec" : "none" + i
 
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   }, card_: {
+
     flexDirection: "row", backgroundColor: color.bg1,
     alignItems: "center", justifyContent: "space-between", padding: 8, marginStart: 100, borderRadius: 8
   },
