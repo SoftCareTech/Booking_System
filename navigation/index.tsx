@@ -105,6 +105,7 @@ function BottomTabNavigator() {
         name="Search"
         component={TabSearchScreen}
         options={{
+          headerShown: false,
           title: 'Search',
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
@@ -114,6 +115,7 @@ function BottomTabNavigator() {
         name="Appointment"
         component={TabAppointmentScreen}
         options={{
+          headerShown: false,
           title: 'Appointment',
           tabBarIcon: ({ color }) => <TabBarIcon name="file-text" color={color} />,
         }}

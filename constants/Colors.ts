@@ -48,6 +48,7 @@ const color = {
   bg1: "#fae9e9", //cardiologis bg , bg monday, dec 23 
   star: "#ef802f",
   bgStar: "#fef8f4",
+  red: "red"
 
 
 }
