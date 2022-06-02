@@ -44,7 +44,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Profile'>
+    <Stack.Navigator initialRouteName='Root'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
@@ -54,29 +54,25 @@ function RootNavigator() {
       </Stack.Group>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+        <StackAppointment.Screen name="Payment" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="Note" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
 
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
 
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
-function AppointmentStackNavigator() {
-  return (
-    <StackAppointment.Navigator>
-      <StackAppointment.Screen name="Appointment" component={TabAppointmentScreen} options={{ headerShown: false }} />
-      <StackAppointment.Screen name="Payment" component={TabAppointmentScreen} options={{ headerShown: false }} />
-      <StackAppointment.Screen name="Note" component={TabAppointmentScreen} options={{ headerShown: false }} />
-      <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
-    </StackAppointment.Navigator>
-  );
-}
+
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Search"
+      initialRouteName="Appointment"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
@@ -111,7 +107,6 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
-
       <BottomTab.Screen
         name="Appointment"
         component={TabAppointmentScreen}

@@ -16,6 +16,11 @@ export type RootStackParamList = {
   Signin: undefined;
   Signup: undefined;
   Welcome: undefined;
+
+
+  Payment: undefined;//
+  Note: undefined;
+  ViewAppointments: undefined;
 };
 
 export type AppointmentStackParamList = {
@@ -28,7 +33,8 @@ export type AppointmentStackParamList = {
 export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
-  Appointment: NavigatorScreenParams<AppointmentStackParamList> | undefined;
+  Appointment: undefined; //make Appointment
+
   Profile: undefined;
 };
 

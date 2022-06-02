@@ -5,14 +5,13 @@ import { Platform, StyleSheet, Image, ScrollView, FlatList } from 'react-native'
 import { BtnDefault, card } from '../components/btn';
 
 import img from '../assets/images/img_welcome.png'
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { color } from '../constants/Colors';
 
 
 
-export const Profile = ({ src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
-  return <View style={styles.item}>
+export const Profile = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
+  return <View style={style ? [styles.item, style] : styles.item}>
     {src ? <Image source={src} style={{ height: 100, width: 100, borderRadius: 10 }} /> :
       <View style={styles.item_ico_v} ><Text style={styles.item_ico_t}>{name[0]}</Text> </View>}
     <View style={styles.itemCol}>
