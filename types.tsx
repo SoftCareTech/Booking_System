@@ -15,14 +15,8 @@ export type RootStackParamList = {
   Profile: undefined;
   Signin: undefined;
   Signup: undefined;
-  Welcome: object;
+  Welcome: undefined;
 };
-
-export type RootStackScreenProps<Screen extends
-  keyof RootStackParamList> = NativeStackScreenProps<
-    RootStackParamList,
-    Screen
-  >;
 
 export type AppointmentStackParamList = {
   Appointment: undefined; //make Appointment
@@ -38,6 +32,18 @@ export type RootTabParamList = {
   Profile: undefined;
 };
 
+export type RootStackScreenProps<Screen extends
+  keyof RootStackParamList> = NativeStackScreenProps<
+    RootStackParamList,
+    Screen
+  >;
+/*
+export type RootStackScreenProps<Screen extends
+  keyof RootStackParamList> = CompositeScreenProps<
+    BottomTabScreenProps<RootStackParamList, Screen>,
+    NativeStackScreenProps<RootTabParamList>
+  >;
+*/
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>

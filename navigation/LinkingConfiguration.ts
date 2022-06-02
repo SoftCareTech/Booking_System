@@ -13,7 +13,6 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-
       Welcome: {
         screens: {
           WelcomScreen: "Welcome"
