@@ -27,6 +27,7 @@ import PaymentScreen from '../screens/PaymentScreen';
 import { RootStackParamList, RootStackScreenProps, RootTabParamList, RootTabScreenProps, AppointmentStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabProfileScreen from '../screens/TabProfileScreen';
+import AppointmentDoneScreen from '../screens/AppointmentDone';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -44,7 +45,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Payment'>
+    <Stack.Navigator initialRouteName='Note'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
@@ -56,7 +57,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
-        <StackAppointment.Screen name="Note" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
 
       </Stack.Group>
