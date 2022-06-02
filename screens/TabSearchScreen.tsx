@@ -8,7 +8,7 @@ import hireNurseBg from "../assets/images/hire_nurse_bg.png"
 import { color } from '../constants/Colors';
 const ItemNurse = ({ name = "Aondohemba", amt = 343, sub = "gbenge", sym = "$" }) => {
   return <View style={styles.item}>
-    {name ? <Text style={styles.item_ico}>{name[0]}</Text> : null}
+    {name ? <View style={styles.item_ico_v}><Text style={styles.item_ico_t}>{name[0]}</Text></View> : null}
     <View style={styles.itemCol}>
       <Text style={styles.item_title}>{name}</Text>
       <Text style={styles.item_sub}>{sub}</Text>
@@ -72,15 +72,26 @@ const styles = StyleSheet.create({
     , alignItems: "flex-start"
 
   },
-  item_ico: {
+
+  item_ico_v: {
     height: 50,
     width: 50,
-    textAlign: "center"
-    , borderRadius: 10,
+    borderRadius: 10,
+    backgroundColor: color.black,
+    textAlignVertical: "center"
+    , alignContent: "center",
+    alignItems: "center",
+    justifyContent: 'center'
+
+  },
+  item_ico_t: {
+    textAlign: "center",
     fontSize: 35,
     color: color.gray,
     backgroundColor: color.black,
     textAlignVertical: "center"
+    , alignContent: "center"
+
   },
   item_title: {
     fontSize: 20,

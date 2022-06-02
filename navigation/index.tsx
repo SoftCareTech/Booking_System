@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -44,12 +44,13 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Root'>
+    <Stack.Navigator initialRouteName='Profile'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen}
+        />
       </Stack.Group>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

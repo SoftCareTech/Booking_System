@@ -36,9 +36,21 @@ const styles = StyleSheet.create({
         color: colors.white,
         backgroundColor: colors.black,
 
+
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: .3,
+        shadowRadius: 8,
+        elevation: 5,
+
+
+    },
+    card: {
+        backgroundColor: colors.black,
+
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: .1,
         shadowRadius: 8,
         elevation: 5,
 
@@ -114,5 +126,5 @@ const styles = StyleSheet.create({
 
 
 
-
+export const card = styles.card
 
