@@ -1,4 +1,4 @@
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, Ionicons, Zocial } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Platform, StyleSheet, Image, ScrollView, FlatList } from 'react-native';
@@ -18,7 +18,7 @@ export const Profile = ({ style = null, src = null, name = "Aondohemba", sub = "
       <Text style={styles.item_title}>{name}</Text>
       <Text style={styles.item_sub}>{sub}</Text>
       <View style={styles.itemRow}>
-        <FontAwesome name='reddit-alien' size={30} color={color.blue} />
+        <Ionicons name="ios-people-sharp" size={24} color={color.blue} />
         <View style={styles.itemCol}>
           <Text style={styles.item_sub}>Partcipate</Text>
           <Text style={styles.item_title}>{participant}</Text>
@@ -71,9 +71,10 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.head}>
-        <FontAwesome name="align-left" size={25} />
+
+        <Ionicons name="chevron-back" size={24} color={color.blue} />
         <Text style={styles.title}>Profile</Text>
-        <FontAwesome name="align-right" size={25} />
+        <Zocial name="email" size={24} color={color.blue} />
       </View>
       <ScrollView>
         <Profile name='Seun olumide' sub='Nurse' participant={"345+"} src={img} />
