@@ -44,7 +44,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Root'>
+    <Stack.Navigator initialRouteName='Payment'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
@@ -55,7 +55,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
-        <StackAppointment.Screen name="Payment" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Note" component={TabAppointmentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="ViewAppointments" component={TabAppointmentScreen} options={{ headerShown: false }} />
 
@@ -72,7 +72,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Appointment"
+      // initialRouteName="Appointment"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>

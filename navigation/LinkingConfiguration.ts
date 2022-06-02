@@ -35,6 +35,22 @@ const linking: LinkingOptions<RootStackParamList> = {
         }
       },
 
+      Payment: {
+        screens: {
+          PaymentScreen: "Payment"
+        }
+      },
+      Note: {
+        screens: {
+          NoteScreen: "Note"
+        }
+      },
+      ViewAppointments: {
+        screens: {
+          ViewAppointmentsScreen: "ViewAppointments"
+        }
+      },
+
       Root: {
         screens: {
           Home: {
@@ -49,31 +65,8 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
           Appointment: {
             screens: {
-              Appointment: {
-                screens: {
-                  Appointment: {
-                    screens: {
-                      AppointmentScreen: "Appointment"
-                    }
-                  },
-                  Payment: {
-                    screens: {
-                      PaymentScreen: "Payment"
-                    }
-                  },
-                  Note: {
-                    screens: {
-                      NoteScreen: "Note"
-                    }
-                  },
-                  ViewAppointments: {
-                    screens: {
-                      ViewAppointmentsScreen: "ViewAppointments"
-                    }
-                  },
-                }
-              },
-            },
+              AppointmentScreen: "Appointment"
+            }
           },
 
 

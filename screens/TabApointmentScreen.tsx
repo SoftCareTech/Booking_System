@@ -4,7 +4,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Agenda, Calendar } from 'react-native-calendars';
@@ -118,7 +118,7 @@ export default function TabAppointmentScreen() {
     <View style={styles.container}>
 
       <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
-        <View>
+        <View style={{ paddingBottom: 4 }}>
           <View><Text style={[styles.item_sub,
           { alignItems: "flex-start", alignSelf: 'flex-start' }]} >
             {month(date.getMonth())} {date.getDate()} {date.getFullYear()}</Text>
@@ -128,7 +128,7 @@ export default function TabAppointmentScreen() {
         <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} />
 
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={Dimensions.get('screen').width > Dimensions.get('screen').height}>
         <View style={{ width: '100%', flex: 1 }} >
           {showCalender()}
         </View>

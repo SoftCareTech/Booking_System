@@ -46,14 +46,11 @@ const styles = StyleSheet.create({
 
     },
     card: {
-        backgroundColor: colors.black,
-
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: .1,
-        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 5,
         elevation: 5,
-
 
     },
     buttonText: {
