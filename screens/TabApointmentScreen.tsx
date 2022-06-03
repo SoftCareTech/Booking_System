@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { Agenda, Calendar } from 'react-native-calendars';
 
 import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates'
+import { AppointmettStackScreenProps, PAS } from '../types';
 
 //import { Calendar } from 'react-native-paper-dates';
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
@@ -52,7 +53,8 @@ export const day = (day: number) => day === 0 ? "Monday" : day === 1 ? "Tuesday"
   day === 2 ? "Wednesday" : day === 3 ? "Thursday"
     : day === 4 ? "Friday" : day === 5 ? "Saturday" : day === 6 ? "Sunday" : "None"
 
-export default function TabAppointmentScreen() {
+export default function TabAppointmentScreen({ navigation }:
+  AppointmettStackScreenProps<"Appointment">) {
   const date = new Date()
 
   const showCalender = () => {
@@ -196,28 +198,16 @@ export default function TabAppointmentScreen() {
         onConfirm={onConfirmSingle}
         validRange={{
           startDate: new Date(),
-          // endDate: new Date(), // optional
-          // disabledDates: [new Date()] // optional
-        }}
-      // onChange={} // same props as onConfirm but triggered without confirmed by user
-      // saveLabel="Ok" 
-      // uppercase={false} // optional, default is true
-      // label="Select date" // optional
-      // animationType="slide" // optional, default is 'slide' on ios/android and 'none' on web
-      />
+        }} />
       <TimePickerModal
         visible={visible}
         onDismiss={onDismiss}
         onConfirm={onConfirm}
-        hours={12} // default: current hours
-        minutes={14} // default: current minutes
-        label="Select time" // optional, default 'Select time'
-        uppercase={false} // optional, default is true
-        cancelLabel="Cancel" // optional, default: 'Cancel'
-        confirmLabel="Ok" // optional, default: 'Ok'
-        animationType="fade" // optional, default is 'none'
-      // locale="en" // optional, default is automically detected by your system
-      />
+        hours={12}
+        minutes={14}
+        label="Select time"
+        uppercase={false}
+        animationType="fade" />
 
       <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
         <View style={{ paddingBottom: 4 }}>
@@ -261,12 +251,17 @@ export default function TabAppointmentScreen() {
           </View>
           <View style={styles.actionCon}>
             <View style={{ flex: 1, marginRight: 8, }}>
-              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() => f} /></View>
+              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() =>
+                navigation.replace("Payment")} /></View>
             <View style={{ flex: 1, marginLeft: 8 }}>
               <BtnDefault style={[styles.btn, {
                 color: color.blue, backgroundColor: "transparents"
               }]}
-                title={"Cancel"} />
+                title={"Cancel"} onPress={() => {
+                  //if (navigation.canGoBack()) navigation.goBack()  else
+                  navigation.replace("RootTab", { screen: "Search" })
+                }
+                } />
             </View>
           </View>
         </ScrollView>

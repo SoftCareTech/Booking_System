@@ -55,7 +55,7 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
           <TextInput style={styles.textI} autoCorrect={false}
             secureTextEntry underlineColorAndroid={color.black} />
           <BtnDefault title='Login' style={styles.btn}
-            onPress={() => navigation.replace('Root', { screen: 'Search' })} />
+            onPress={() => navigation.replace('RootTab', { screen: 'Search' })} />
         </View>
 
         <Text style={styles.text}>Or Continue with</Text>

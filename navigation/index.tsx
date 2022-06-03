@@ -6,7 +6,7 @@
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-Stack';
 import * as React from 'react';
 
 import { ColorSchemeName, Pressable } from 'react-native';
@@ -16,7 +16,6 @@ import useColorScheme from '../hooks/useColorScheme';
 
 import SigninScreen from '../screens/SigninScreen';
 import SignupScreen from '../screens/SignupScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabHomeScreen from '../screens/TabHomeScreen';
 import TabSearchScreen from '../screens/TabSearchScreen';
@@ -30,6 +29,7 @@ import TabProfileScreen from '../screens/TabProfileScreen';
 import AppointmentDoneScreen from '../screens/AppointmentDone';
 import ViewAppointmentScreen from '../screens/ViewAppointments';
 import PaystackWebView from '../screens/PaystackWebViewScreen';
+import ViewNurseScreen from '../screens/ViewNurseScreen';
 
 /*eas whoiam
 eas login
@@ -39,44 +39,45 @@ eas build -p android --profile apk
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
+      // linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
 }
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>();
 
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Signin'>
-      <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Signin" component={SigninScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="PaystackWebView" component={PaystackWebView} />
-      </Stack.Group>
+    <RootStack.Navigator initialRouteName={'ViewNurse'}  >
+      <RootStack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+        <RootStack.Screen name="Welcome" component={WelcomeScreen} />
+        <RootStack.Screen name="Signin" component={SigninScreen} />
+        <RootStack.Screen name="Signup" component={SignupScreen} />
+        <RootStack.Screen name="ViewNurse" component={ViewNurseScreen} />
+        <RootStack.Screen name="PaystackWebView" component={PaystackWebView} />
+      </RootStack.Group>
 
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <RootStack.Screen name="RootTab" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 
-    </Stack.Navigator>
+    </RootStack.Navigator>
   );
 }
-function RootAppointment() {
+function AppointmentNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='ViewAppointments'>
-      <Stack.Group screenOptions={{ presentation: 'containedTransparentModal', headerShown: false }}>
+    <StackAppointment.Navigator  >
+      <StackAppointment.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+        <StackAppointment.Screen name="Appointment" component={TabAppointmentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="ViewAppointments" component={ViewAppointmentScreen} options={{ headerShown: false }} />
-      </Stack.Group>
-    </Stack.Navigator>
+      </StackAppointment.Group>
+    </StackAppointment.Navigator>
   );
 }
 
@@ -84,10 +85,9 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
-      initialRouteName="Appointment"
+      initialRouteName="Search"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
@@ -97,20 +97,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Root')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+
         })}
       />
       <BottomTab.Screen
@@ -124,7 +111,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Appointment"
-        component={RootAppointment}
+        component={AppointmentNavigator}
         options={{
           headerShown: false,
           title: 'Appointment',
@@ -143,12 +130,12 @@ function BottomTabNavigator() {
   );
 }
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
+
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+

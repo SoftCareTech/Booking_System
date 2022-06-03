@@ -2,7 +2,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
+///import   { StackScreenProps } from '@react-navigation/stack';
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList { }
@@ -10,9 +10,9 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  RootTab: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  Profile: { name: string; desc: string; amt: number; s: string; };
+  ViewNurse: { name: string; desc: string; amt: number; };
   Signin: undefined;
   Signup: undefined;
   Welcome: undefined;
@@ -30,22 +30,22 @@ export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
   Appointment: NavigatorScreenParams<AppointmentStackParamList> | undefined;
-
   Profile: undefined;
 };
 
-export type RootStackScreenProps<Screen extends
-  keyof RootStackParamList> = NativeStackScreenProps<
-    RootStackParamList,
-    Screen>;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList>
+  = NativeStackScreenProps<RootStackParamList, Screen>;
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
+export type RootTabScreenProps<Screen extends keyof RootTabParamList>
+  = CompositeScreenProps<BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>>;
 
-export type AppointmettStackScreenProps<Screen extends keyof AppointmentStackParamList> = CompositeScreenProps<
-  NativeStackScreenProps<AppointmentStackParamList, Screen>,
-  BottomTabScreenProps<RootStackParamList>
+export type AppointmettStackScreenProps<Screen extends keyof AppointmentStackParamList>
+  = CompositeScreenProps<NativeStackScreenProps<AppointmentStackParamList, Screen>,
+    CompositeScreenProps<BottomTabScreenProps<RootTabParamList>,
+      NativeStackScreenProps<RootStackParamList>>>;
+
+export type PAS = CompositeScreenProps<
+  NativeStackScreenProps<AppointmentStackParamList, 'Appointment'>,
+  NativeStackScreenProps<RootStackParamList>
 >;

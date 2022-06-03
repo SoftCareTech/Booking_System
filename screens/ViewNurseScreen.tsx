@@ -1,12 +1,13 @@
 import { FontAwesome, FontAwesome5, Ionicons, Zocial } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Platform, StyleSheet, Image, ScrollView, FlatList } from 'react-native';
+import { Platform, StyleSheet, Image, ScrollView, FlatList, Pressable } from 'react-native';
 import { BtnDefault, card } from '../components/btn';
 
 import img from '../assets/images/img_welcome.png'
 import { Text, View } from '../components/Themed';
 import { color } from '../constants/Colors';
+import { RootStackScreenProps } from '../types';
 
 
 
@@ -55,7 +56,7 @@ const Comment = ({ src = null, name = "", text = "ooh" }) => {
 
 
 
-export default function ProfileScreen() {
+export default function ViewNurseScreen({ navigation }: RootStackScreenProps<"ViewNurse">) {
 
   const comments = [
     {
@@ -71,8 +72,12 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.head}>
-
-        <Ionicons name="chevron-back" size={24} color={color.blue} />
+        <Pressable onPress={() => {
+          if (navigation.canGoBack()) navigation.goBack()
+          else navigation.replace("RootTab", { screen: "Search" })
+        }}>
+          <Ionicons name="chevron-back" size={24} color={color.blue} />
+        </Pressable>
         <Text style={styles.title}>Profile</Text>
         <Zocial name="email" size={24} color={color.blue} />
       </View>
@@ -109,7 +114,9 @@ export default function ProfileScreen() {
         keyExtractor={(e) => e.id}
         renderItem={({ item }) => <Comment src={item.src} name={item.name} text={item.text} />} />
 
-      <BtnDefault style={{ backgroundColor: color.blue }} title={"Make an Appointment"} />
+      <BtnDefault style={{ backgroundColor: color.blue }}
+        title={"Make an Appointment"}
+        onPress={() => navigation.replace("RootTab", { screen: "Appointment" })} />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );

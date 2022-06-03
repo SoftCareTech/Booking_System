@@ -37,7 +37,7 @@ export default function TabSearchScreen({ navigation }: RootTabScreenProps<'Sear
         data={data}
         keyExtractor={(e) => e.name}
         renderItem={({ item }) => <TouchableHighlight onPress={() =>
-          navigation.navigate("Profile", item)}>
+          navigation.navigate("ViewNurse", item)}>
           <ItemNurse name={item.name} sub={item.desc}
             amt={item.amt} />
         </TouchableHighlight>}
