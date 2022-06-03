@@ -16,11 +16,7 @@ export type RootStackParamList = {
   Signin: undefined;
   Signup: undefined;
   Welcome: undefined;
-
-
-  Payment: undefined;//
-  Note: undefined;
-  ViewAppointments: undefined;
+  PaystackWebView: { url: string }
 };
 
 export type AppointmentStackParamList = {
@@ -33,7 +29,7 @@ export type AppointmentStackParamList = {
 export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
-  Appointment: undefined; //make Appointment
+  Appointment: NavigatorScreenParams<AppointmentStackParamList> | undefined;
 
   Profile: undefined;
 };
@@ -41,16 +37,15 @@ export type RootTabParamList = {
 export type RootStackScreenProps<Screen extends
   keyof RootStackParamList> = NativeStackScreenProps<
     RootStackParamList,
-    Screen
+    Screen>;
+
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
   >;
-/*
-export type RootStackScreenProps<Screen extends
-  keyof RootStackParamList> = CompositeScreenProps<
-    BottomTabScreenProps<RootStackParamList, Screen>,
-    NativeStackScreenProps<RootTabParamList>
-  >;
-*/
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
+
+export type AppointmettStackScreenProps<Screen extends keyof AppointmentStackParamList> = CompositeScreenProps<
+  NativeStackScreenProps<AppointmentStackParamList, Screen>,
+  BottomTabScreenProps<RootStackParamList>
 >;

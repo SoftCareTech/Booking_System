@@ -13,67 +13,30 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Welcome: {
-        screens: {
-          WelcomScreen: "Welcome"
-        }
-      },
-      Profile: {
-        screens: {
-          TabProfileScreen: "Profile"
-        }
-      }
-      ,
-      Signin: {
-        screens: {
-          SigninScreen: "Signin"
-        }
-      },
-      Signup: {
-        screens: {
-          SignupScreen: "Signup"
-        }
-      },
-
-      Payment: {
-        screens: {
-          PaymentScreen: "Payment"
-        }
-      },
-      Note: {
-        screens: {
-          NoteScreen: "Note"
-        }
-      },
-      ViewAppointments: {
-        screens: {
-          ViewAppointmentsScreen: "ViewAppointments"
-        }
-      },
+      Welcome: "welcome:name?",
+      Signin: "signin",
+      Signup: "/signup",
+      PaystackWebView: "PaystackWebView:/url",
 
       Root: {
         screens: {
-          Home: {
-            screens: {
-              TabHomeScreen: 'Home',
-            },
-          },
-          Search: {
-            screens: {
-              TabSearchScreen: 'Search',
-            },
-          },
+          Home: 'Home',
+          Search: 'Search',
           Appointment: {
             screens: {
-              AppointmentScreen: "Appointment"
+              Appointment: {
+                screens: {
+                  PaymentScreen: "Appointment",
+
+                  Payment: "Payment",
+                  Note: "Note",
+                  ViewAppointments: "ViewAppointments"
+                }
+              }
             }
-          },
-
-
-
-        },
+          }
+        }
       },
-
 
       NotFound: '*',
     },

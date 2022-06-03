@@ -29,7 +29,13 @@ import LinkingConfiguration from './LinkingConfiguration';
 import TabProfileScreen from '../screens/TabProfileScreen';
 import AppointmentDoneScreen from '../screens/AppointmentDone';
 import ViewAppointmentScreen from '../screens/ViewAppointments';
+import PaystackWebView from '../screens/PaystackWebViewScreen';
 
+/*eas whoiam
+eas login
+eas build:configure
+eas build -p android --profile apk
+*/
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -46,22 +52,18 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator initialRouteName='Root'>
+    <Stack.Navigator initialRouteName='Signin'>
       <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen}
-        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="PaystackWebView" component={PaystackWebView} />
       </Stack.Group>
+
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
-        <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
-        <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
-        <StackAppointment.Screen name="ViewAppointments" component={ViewAppointmentScreen} options={{ headerShown: false }} />
 
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -97,7 +99,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Profile')}
+              onPress={() => navigation.navigate('Root')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
@@ -122,7 +124,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Appointment"
-        component={TabAppointmentScreen}
+        component={RootAppointment}
         options={{
           headerShown: false,
           title: 'Appointment',
