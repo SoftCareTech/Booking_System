@@ -9,17 +9,14 @@ import { color } from '../constants/Colors';
 import ico from "../assets/images/ico_lox.png"
 import ico_g from "../assets/images/google.png"
 import bga from "../assets/images/bga.png"
-import Svg, {
-  Path,
-  Polygon,
-  Polyline
-} from 'react-native-svg';
 import { BtnDefault } from '../components/btn';
 import { RootStackScreenProps } from '../types';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
 const mobileWidth = 400
 export default function SigninScreen({ navigation }: RootStackScreenProps<'Signin'>) {
+
   return (<ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
 
     <View style={styles.container}>
@@ -58,7 +55,7 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
           <TextInput style={styles.textI} autoCorrect={false}
             secureTextEntry underlineColorAndroid={color.black} />
           <BtnDefault title='Login' style={styles.btn}
-            onPress={() => navigation.replace('Root')} />
+            onPress={() => navigation.replace('Root', { screen: 'Search' })} />
         </View>
 
         <Text style={styles.text}>Or Continue with</Text>

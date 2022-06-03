@@ -2,11 +2,14 @@ import { ScrollView, StyleSheet, TextInput } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import PaystackWebView, { Paystack } from 'react-native-paystack-webview';
+import PaystackWebView, { Paystack, paystackProps } from 'react-native-paystack-webview';
 import { BtnDefault, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Entypo, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { Dropdown } from 'react-native-element-dropdown';
+import { WebView } from 'react-native-webview';
+ 
 
 export default function PaymentScreen() {
 
@@ -15,30 +18,65 @@ export default function PaymentScreen() {
     { name: "Verve Card" },
     { name: "Vista Card" },
   ]
+  let amount = 250
   const [merchant, setMerchant] = useState("Master Card")
+  const [errorMsg, setErrorMsg] = useState("")
+  const paystackWebViewRef = useRef<paystackProps.PayStackRef>();
+
+  const params = JSON.stringify({
+    "email": "customer@email.com",
+    "amount": "20000"
+  })
+  const options = {
+    hostname: 'api.paystack.co',
+    port: 443,
+    path: '/transaction/initialize',
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer pk_test_dc3af5c32c444790b0ec4d0a7fad69fb3fb4fb5e',
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const authorization_url = 'https://checkout.paystack.com/luKuasMan';
+  const callback_url = 'https://yourcallback.com';
   return (
     <View style={styles.container}>
       <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+      <Paystack
+        paystackKey="pk_test_dc3af5c32c444790b0ec4d0a7fad69fb3fb4fb5e"
+        amount={"" + amount}
+        billingEmail="gbengeraphael@gmail.com"
+        activityIndicatorColor="green"
+        onCancel={(e: any) => {
+          console.log(e)
+        }}
+        onSuccess={(res: any) => {
+          console.log(res)
+        }}
+        ref={paystackWebViewRef}
+      />
       <ScrollView>
         <View style={{ paddingTop: 16 }}>
           <Text style={[styles.text, { fontWeight: '700' }]}>Payment Method</Text>
           <View style={[styles.itemRow, { ...card, padding: 8, borderRadius: 10, backgroundColor: color.gray }]}>
             <MaterialIcons name="credit-card" size={40} color="black" />
-            <TextInput style={styles.input} />
-            <Entypo name="chevron-down" size={40} color="black" />
+
+            <Dropdown
+              style={styles.input}
+              data={merchantList}
+              maxHeight={250}
+              labelField="name"
+              valueField="name"
+              value={merchant}
+              placeholder={""}
+              onChange={item => {
+                setMerchant(item.name);
+              }}
+              iconStyle={{ height: 40, width: 40 }}
+            />
+
           </View>
-          {/*<Dropdown
-          style={styles.input}
-          data={merchantList}
-          maxHeight={250}
-          labelField="name"
-          valueField="name"
-          value={merchant}
-          placeholder={""}
-          onChange={item => {
-            setMerchant(item.name);
-          }}
-        />  */}
           <View style={styles.itemRow}>
             <Text style={styles.text}>Order</Text>
             <View style={[styles.itemRow, { flex: -1 }]}>
@@ -74,25 +112,12 @@ export default function PaymentScreen() {
 
       </ScrollView>
 
+      <Text style={styles.inputDis} > {errorMsg}</Text>
 
-      <Paystack
-        paystackKey="pk_test_dc3af5c32c444790b0ec4d0a7fad69fb3fb4fb5e"
-        amount={'25000.00'}
-        billingEmail="gbengeraphael@gmail.com"
-        activityIndicatorColor="green"
-        onCancel={(e: any) => {
-          // handle response here
-          console.log("User cancel or ended", e)
-        }}
-        onSuccess={(res: any) => {
-          console.log("On success", res)
-          // handle response here
-        }}
-        autoStart={false}
-      />
 
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-        <BtnDefault style={styles.pay} title={"Pay"} />
+        <BtnDefault style={styles.pay} title={"Pay"}
+          onPress={() => paystackWebViewRef.current.startTransaction()} />
       </View>
     </View>
   );
@@ -129,10 +154,10 @@ const styles = StyleSheet.create({
 
   },
   input: {
-    textAlign: 'center'
-    , textAlignVertical: "center"
-    , fontSize: 20, height: 50
+    flex: 2,
+    fontSize: 20, height: 50
     , backgroundColor: color.gray
+
   },
   conDis: {
     width: '100%', alignItems: "center", justifyContent:
