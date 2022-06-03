@@ -2,12 +2,15 @@
 import img from '../assets/images/user1.png'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import { BtnDefault, card } from '../components/btn';
+import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
 import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Agenda, Calendar } from 'react-native-calendars';
+
+import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates'
+
 //import { Calendar } from 'react-native-paper-dates';
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
   return <View style={style ? [styles.item, style] : styles.item}>
@@ -45,6 +48,9 @@ const Item = ({ src = null, title = "Cardiologist", sub = "Don Johnson" }) => <V
 export const month = (i: number) => i === 0 ? "Jan" : i === 1 ? "Feb" : i === 2 ? "March" : i === 3 ? "Apr" :
   i === 4 ? "May" : i === 5 ? "Jun" : i === 6 ? "Jul" : i === 7 ? "Aug" :
     i === 8 ? "Sep" : i === 9 ? "Oct" : i === 10 ? "Nov" : i === 11 ? "Dec" : "none" + i
+export const day = (day: number) => day === 0 ? "Monday" : day === 1 ? "Tuesday" :
+  day === 2 ? "Wednesday" : day === 3 ? "Thursday"
+    : day === 4 ? "Friday" : day === 5 ? "Saturday" : day === 6 ? "Sunday" : "None"
 
 export default function TabAppointmentScreen() {
   const date = new Date()
@@ -65,7 +71,7 @@ export default function TabAppointmentScreen() {
     }
     const [selected, setSelected] = useState("2022-05-12")
     return <Agenda
-      hideExtraDays={true}
+      //hideExtraDays={true}
       items={items}
       // Callback that gets called when items for a certain month should be loaded (month became visible)
       loadItemsForMonth={month => {
@@ -137,13 +143,81 @@ export default function TabAppointmentScreen() {
   }
 
 
+  const formatDate = (date = new Date()) => day(date.getDay()) + ", " + month(date.getMonth()) + ", "
+    + date.getDate()
+  const formatTime = (h = 0, m = 0) => {
+    const s = (v = 0) => v > 9 ? v + "" : "0" + v
+    return s(h) + ":" + s(m)
+  }
+
+  const [visible, setVisible] = React.useState(false)
+  const [timeValue, setTimeValue] = React.useState(formatTime(date.getHours(), date.getMinutes()))
+  const [dateP, setDateP] = React.useState<Date | undefined>(date);
+  const [open, setOpen] = React.useState(false);
+
+  const onDismissSingle = React.useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
+  const onConfirmSingle = React.useCallback(
+    (params) => {
+      setOpen(false);
+      setDateP(params.date);
+    },
+    [setOpen, setDateP]
+  );
 
 
+
+  const onDismiss = React.useCallback(() => {
+    setVisible(false)
+  }, [setVisible])
+
+  const onConfirm = React.useCallback(
+    ({ hours, minutes }) => {
+      setVisible(false);
+      console.log({ hours, minutes });
+      setTimeValue(formatTime(hours, minutes))
+    },
+    [setVisible]
+  );
 
 
 
   return (
     <View style={styles.container}>
+
+      <DatePickerModal
+        locale="en"
+        mode="single"
+        visible={open}
+        onDismiss={onDismissSingle}
+        date={date}
+        onConfirm={onConfirmSingle}
+        validRange={{
+          startDate: new Date(),
+          // endDate: new Date(), // optional
+          // disabledDates: [new Date()] // optional
+        }}
+      // onChange={} // same props as onConfirm but triggered without confirmed by user
+      // saveLabel="Ok" 
+      // uppercase={false} // optional, default is true
+      // label="Select date" // optional
+      // animationType="slide" // optional, default is 'slide' on ios/android and 'none' on web
+      />
+      <TimePickerModal
+        visible={visible}
+        onDismiss={onDismiss}
+        onConfirm={onConfirm}
+        hours={12} // default: current hours
+        minutes={14} // default: current minutes
+        label="Select time" // optional, default 'Select time'
+        uppercase={false} // optional, default is true
+        cancelLabel="Cancel" // optional, default: 'Cancel'
+        confirmLabel="Ok" // optional, default: 'Ok'
+        animationType="fade" // optional, default is 'none'
+      // locale="en" // optional, default is automically detected by your system
+      />
 
       <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
         <View style={{ paddingBottom: 4 }}>
@@ -153,7 +227,8 @@ export default function TabAppointmentScreen() {
             <Text style={styles.title} >Today</Text></View>
 
         </View>
-        <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} />
+        <BtnDefault title={"+ Add"}
+          style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} />
 
       </View>
       <View style={{ width: '100%', flex: 1 }} >
@@ -169,23 +244,24 @@ export default function TabAppointmentScreen() {
           </View>
           <Profile1 name='Semo Olomide' name={"gbabaka"} style={{ flexDirection: "row-reverse" }} src={img} />
           <View style={styles.dateCon}>
-            <Pressable onPress={() => {
-
-            }}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
+            <Pressable onPress={() => setOpen(true)}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparents", }}>
                 <Ionicons name="md-calendar" size={24} color={color.blue} />
-                <Text style={[styles.item_sub, { fontWeight: "700", }]}> Monday, Dec, 23</Text>
+                <Text style={[styles.item_sub, { fontWeight: "700", }]}> {formatDate(dateP)}</Text>
+              </View>
+            </Pressable>
+            <Pressable onPress={() => setVisible(true)}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
+                <Ionicons name="time" size={24} color={color.blue} />
+                <Text style={[styles.item_sub, { fontWeight: "700", }]}> {timeValue}
+                </Text>
               </View>
             </Pressable>
 
-            <View style={{ flexDirection: "row" }}>
-              <Ionicons name="time" size={24} color={color.blue} />
-              <Text style={[styles.item_sub, { fontWeight: "700", }]}> 12:00-13:00</Text>
-            </View>
           </View>
           <View style={styles.actionCon}>
             <View style={{ flex: 1, marginRight: 8, }}>
-              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() => na} /></View>
+              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() => f} /></View>
             <View style={{ flex: 1, marginLeft: 8 }}>
               <BtnDefault style={[styles.btn, {
                 color: color.blue, backgroundColor: "transparents"
