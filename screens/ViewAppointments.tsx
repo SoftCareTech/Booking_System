@@ -43,6 +43,10 @@ export default function ViewAppointmentScreen() {
 
     const items = {
       "2022-05-06": [{ date: "2022-05-6", name: "Seun Olomide", time: '9:00AM', status: true },
+      { date: "2022-05-6", name: "Seun Olomide", time: '11:00AM', status: true },
+      { date: "2022-05-6", name: "Seun Olomide", time: '9:00AM', status: true },
+      { date: "2022-05-6", name: "Seun Olomide", time: '11:00AM', status: true }, { date: "2022-05-6", name: "Seun Olomide", time: '11:00AM', status: true },
+      { date: "2022-05-6", name: "Seun Olomide", time: '9:00AM', status: true },
       { date: "2022-05-6", name: "Seun Olomide", time: '11:00AM', status: true },],
 
       '2022-05-03': [{ date: "2022-05-3", name: "Seun Olomide", time: '9:00AM', status: true },],
@@ -98,19 +102,20 @@ export default function ViewAppointmentScreen() {
         return r1.text !== r2.text;
       }}
       firstDay={3}
-      hideKnob={true}
+      hideKnob={false}
       // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
       showClosingKnob={true} onRefresh={() => console.log('refreshing...')}
       refreshing={false}
       // Agenda theme
       theme={{
+        backgroundColor: '#ffffff',
         agendaDayTextColor: 'yellow',
         agendaDayNumColor: 'green',
         agendaTodayColor: 'red',
         agendaKnobColor: 'blue'
       }}
       // Agenda container style
-      style={{}}
+      style={{ flex: 2, height: "100%", }}
     />
   }
 
@@ -123,7 +128,6 @@ export default function ViewAppointmentScreen() {
     <View style={styles.container}>
       <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
       <View style={styles.main}>
-
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
           <View style={{ paddingBottom: 4 }}>
             <View><Text style={[styles.item_time,
@@ -135,10 +139,10 @@ export default function ViewAppointmentScreen() {
           <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} onPress={undefined} />
 
         </View>
+        <View style={{ flex: 1, backgroundColor: "red" }}>
+          {showCalender()}
+        </View>
 
-
-
-        {showCalender()}
         <View style={styles.conDis}>
           <BtnText style={styles.inputDis} title={"View Appointments"} />
         </View>
@@ -184,13 +188,8 @@ const styles = StyleSheet.create({
     backgroundColor: color.blue,
     color: color.gray,
   },
-  input: {
-    textAlign: 'center'
-    , textAlignVertical: "center"
-    , fontSize: 20, height: 50
-    , backgroundColor: color.gray
-  },
   conDis: {
+    marginVertical: 32,
     width: '100%', alignItems: "center", justifyContent:
       'center', borderWidth: 2, borderStyle: "dashed",
   },

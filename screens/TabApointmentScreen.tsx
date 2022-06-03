@@ -4,9 +4,9 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState } from 'react';
 import { Agenda, Calendar } from 'react-native-calendars';
 //import { Calendar } from 'react-native-paper-dates';
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
@@ -33,28 +33,43 @@ export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = 
 }
 
 
-
+const Item = ({ src = null, title = "Cardiologist", sub = "Don Johnson" }) => <View style={{ width: '100%' }} >
+  <View style={[styles.card_, { marginVertical: 8 }]}>
+    <View style={{ flex: 1, backgroundColor: color.bg1, }}>
+      <Text>{title}</Text>
+      <Text>{sub}</Text>
+    </View>
+    <Image source={src} style={{ height: 24, width: 24, borderRadius: 24 }} />
+  </View>
+</View>
 export const month = (i: number) => i === 0 ? "Jan" : i === 1 ? "Feb" : i === 2 ? "March" : i === 3 ? "Apr" :
   i === 4 ? "May" : i === 5 ? "Jun" : i === 6 ? "Jul" : i === 7 ? "Aug" :
     i === 8 ? "Sep" : i === 9 ? "Oct" : i === 10 ? "Nov" : i === 11 ? "Dec" : "none" + i
 
 export default function TabAppointmentScreen() {
   const date = new Date()
-  const monthItem = {
-    '2022-04-15': [{ name: 'item 1 - any js object' }],
-    '2022-04-23': [{ name: 'item 2 - any js object', height: 80 }],
-    '2022-04-24': [],
-    '2022-04-25': [{ name: 'item 3 - any js object' }, { name: 'any js object' }]
-  }
+
   const showCalender = () => {
+
+    const items = {
+      "2022-05-06": [
+        { date: "2022-05-15", title: "Cardiologist", time: '9:00AM', name: "Don Johnson", src: img },
+        { date: "2022-05-16", title: "Cardiologist", time: '11:00AM', deesc: "true", src: null, },],
+
+      '2022-05-13': [],
+
+      '2022-05-12': [{
+        date: "2022-05-12", title: "Cardiologist", time: '9:00AM',
+        deesc: "Don Johnson", src: img
+      }]
+    }
+    const [selected, setSelected] = useState("2022-05-12")
     return <Agenda
-      // The list of items that have to be displayed in agenda. If you want to render item as empty date
-      // the value of date key has to be an empty array []. If there exists no value for date key it is
-      // considered that the date in question is not yet loaded
-      items={null}
+      hideExtraDays={true}
+      items={items}
       // Callback that gets called when items for a certain month should be loaded (month became visible)
       loadItemsForMonth={month => {
-        console.log('trigger items loading', month);
+        // console.log('trigger items loading', month);
       }}
       // Callback that fires when the calendar is opened or closed
       onCalendarToggled={calendarOpened => {
@@ -62,49 +77,62 @@ export default function TabAppointmentScreen() {
       }}
       // Callback that gets called on day press
       onDayPress={day => {
-        console.log('day pressed');
+        setSelected(day.dateString)
       }}
       // Callback that gets called when day changes while scrolling agenda list
       onDayChange={day => {
-        console.log('day changed');
+        // 
+        console.log('day changed', day);
       }}
-      selected={'2022-04-15'}
+      selected={selected}
       pastScrollRange={50}
       futureScrollRange={50}
       renderItem={(item, firstItemInDay) => {
-        return <View><Text>{item.name}</Text></View>;
+        return <View> <Item title={item?.title} time={item?.time}
+          name={item?.name} src={item.src} />  </View>;
       }}
       renderDay={(day, item) => {
-        return <View />
+        return <View style={{ height: "100%", alignItems: "center", paddingEnd: 50, justifyContent: "space-around" }} >
+          <Text>{item?.time}</Text>
+        </View>
+
       }}
       // Specify how empty date content with no items should be rendered
       renderEmptyDate={() => {
-        return <View><Text>No data</Text></View>;
+        return <View />;
       }}
-      markedDates={{ '2022-04-15': { selected: true, marked: true }, }}
+      // markedDates={{ '2022-04-15': { selected: true, marked: true }, }}
 
-
+      renderKnob={() => <View style={{
+        width: Dimensions.get('screen').width - 32,
+        alignItems: "flex-start", flex: 1,
+      }}><Text style={styles.title} >Shedule Today</Text></View>}
       renderEmptyData={() => {
-        return <View><Text>`</Text></View>;
+        return <View style={{ backgroundColor: "blue", height: 2, width: "100%" }} />
       }}
       // Specify your item comparison function for increased performance
       rowHasChanged={(r1, r2) => {
         return r1.text !== r2.text;
       }}
       firstDay={3}
-      hideKnob={true}
+      hideKnob={false}
       // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
       showClosingKnob={true} onRefresh={() => console.log('refreshing...')}
       refreshing={false}
       // Agenda theme
       theme={{
+        backgroundColor: '#ffffff',
         agendaDayTextColor: 'yellow',
         agendaDayNumColor: 'green',
         agendaTodayColor: 'red',
         agendaKnobColor: 'blue'
       }}
       // Agenda container style
-      style={{}}
+      style={{
+        flex: 2,
+        borderColor: 'gray',
+        minHeight: 350
+      }}
     />
   }
 
@@ -128,52 +156,46 @@ export default function TabAppointmentScreen() {
         <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} />
 
       </View>
-      <ScrollView showsVerticalScrollIndicator={Dimensions.get('screen').width > Dimensions.get('screen').height}>
-        <View style={{ width: '100%', flex: 1 }} >
-          {showCalender()}
-        </View>
-        <View style={{ width: '100%' }} >
-          <Text style={styles.title} >Shedule Today</Text>
-          <Text>09:00</Text>
-          <View style={{ backgroundColor: "blue", height: 2, width: "100%" }} />
-          <Text>10:00</Text>
-          <View style={styles.card_}>
-            <View style={{ flex: 1, backgroundColor: color.bg1, }}>
-              <Text>Cardiologist</Text>
-              <Text>Don Johnson</Text>
+      <View style={{ width: '100%', flex: 1 }} >
+        {showCalender()}
+      </View>
+      <View>
+        <ScrollView
+          showsVerticalScrollIndicator={Dimensions.get('screen').width >
+            Dimensions.get('screen').height}>
+          <View style={{ width: '100%' }} >
+            <Text style={styles.title} >Reminder</Text>
+            <Text>Don't foget to shedule fo upcoming appointment</Text>
+          </View>
+          <Profile1 name='Semo Olomide' name={"gbabaka"} style={{ flexDirection: "row-reverse" }} src={img} />
+          <View style={styles.dateCon}>
+            <Pressable onPress={() => {
+
+            }}>
+              <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
+                <Ionicons name="md-calendar" size={24} color={color.blue} />
+                <Text style={[styles.item_sub, { fontWeight: "700", }]}> Monday, Dec, 23</Text>
+              </View>
+            </Pressable>
+
+            <View style={{ flexDirection: "row" }}>
+              <Ionicons name="time" size={24} color={color.blue} />
+              <Text style={[styles.item_sub, { fontWeight: "700", }]}> 12:00-13:00</Text>
             </View>
-            <Image source={img} style={{ height: 24, width: 24, borderRadius: 24 }} />
           </View>
-          <Text>11:00</Text>
+          <View style={styles.actionCon}>
+            <View style={{ flex: 1, marginRight: 8, }}>
+              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() => na} /></View>
+            <View style={{ flex: 1, marginLeft: 8 }}>
+              <BtnDefault style={[styles.btn, {
+                color: color.blue, backgroundColor: "transparents"
+              }]}
+                title={"Cancel"} />
+            </View>
+          </View>
+        </ScrollView>
+      </View>
 
-        </View>
-
-        <View style={{ width: '100%' }} >
-          <Text style={styles.title} >Reminder</Text>
-          <Text>Don't foget to shedule fo upcoming appointment</Text>
-        </View>
-        <Profile1 name='Semo Olomide' desc={"gbabaka"} style={{ flexDirection: "row-reverse" }} src={img} />
-        <View style={styles.dateCon}>
-          <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
-            <Ionicons name="md-calendar" size={24} color={color.blue} />
-            <Text style={[styles.item_sub, { fontWeight: "700", }]}> Monday, Dec, 23</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Ionicons name="time" size={24} color={color.blue} />
-            <Text style={[styles.item_sub, { fontWeight: "700", }]}> 12:00-13:00</Text>
-          </View>
-        </View>
-        <View style={styles.actionCon}>
-          <View style={{ flex: 1, marginRight: 8, }}>
-            <BtnDefault title={"Shedule"} style={styles.btn} onPress={() => na} /></View>
-          <View style={{ flex: 1, marginLeft: 8 }}>
-            <BtnDefault style={[styles.btn, {
-              color: color.blue, backgroundColor: "transparents"
-            }]}
-              title={"Cancel"} />
-          </View>
-        </View>
-      </ScrollView>
     </View>
   );
 }
@@ -189,7 +211,7 @@ const styles = StyleSheet.create({
   }, card_: {
 
     flexDirection: "row", backgroundColor: color.bg1,
-    alignItems: "center", justifyContent: "space-between", padding: 8, marginStart: 100, borderRadius: 8
+    alignItems: "center", justifyContent: "space-between", padding: 8, borderRadius: 8
   },
   dateCon: {
     backgroundColor: color.gray
