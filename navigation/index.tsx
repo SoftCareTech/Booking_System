@@ -52,7 +52,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <RootStack.Navigator initialRouteName={'ViewNurse'}  >
+    <RootStack.Navigator initialRouteName={'Signin'}  >
       <RootStack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <RootStack.Screen name="Welcome" component={WelcomeScreen} />
         <RootStack.Screen name="Signin" component={SigninScreen} />

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   Dimensions, Platform, StyleSheet, TextInput, ScrollView,
@@ -11,12 +12,35 @@ import ico_g from "../assets/images/google.png"
 import bga from "../assets/images/bga.png"
 import { BtnDefault } from '../components/btn';
 import { RootStackScreenProps } from '../types';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SignupScreen from './SignupScreen';
+
 
 const mobileWidth = 400
 export default function SigninScreen({ navigation }: RootStackScreenProps<'Signin'>) {
 
+
+  const [email, setEmail] = useState("test@gmail.com")
+  const [password, setPassword] = useState("test")
+  const [error, setError] = useState("")
+  const signin = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('credential')
+      const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+      if (data != null) {
+        if (password == data.password && email == data.email) {
+          console.log(jsonValue)
+          navigation.replace('RootTab', { screen: 'Search' })
+          return
+        }
+      }
+      setError("User not found: Register a user| Only one user per device|local test mode")
+    } catch (e) {
+      setError("Error occure: Register a user| Only one user per device")
+    }
+
+
+  }
   return (<ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
 
     <View style={styles.container}>
@@ -46,17 +70,24 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
 
         <View style={styles.containerI}>
           <Text style={styles.textL}>Email</Text>
-          <TextInput style={styles.textI} underlineColorAndroid={color.black} />
+          <TextInput style={styles.textI} value={email} onChangeText={setEmail}
+            underlineColorAndroid={color.black} />
 
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
             <Text style={styles.textL}>Password</Text>
             <Text style={[styles.textL, { fontWeight: '600' }]}>Forget?</Text>
           </View>
           <TextInput style={styles.textI} autoCorrect={false}
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry underlineColorAndroid={color.black} />
           <BtnDefault title='Login' style={styles.btn}
-            onPress={() => navigation.replace('RootTab', { screen: 'Search' })} />
+            onPress={async () => signin()} />
         </View>
+        <Text style={{
+          width: "100%", color: "red", alignSelf: "center", textAlign: 'center',
+          justifyContent: "center", alignItems: "center",
+        }}>{error}</Text>
 
         <Text style={styles.text}>Or Continue with</Text>
         <View style={styles.containerRow}>
@@ -69,7 +100,7 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
             <Text style={styles.text}>  Facebook</Text>
           </View>
         </View>
-        <Pressable onPress={() => navigation.replace('Signup')}>
+        <Pressable onPress={() => navigation.navigate("Signup")}>
           <View style={[styles.containerRow_, { backgroundColor: color.white }]}>
             <Text style={styles.text}>Don't have account  </Text>
             <Text style={[styles.text, { fontWeight: "bold" }]}>Create new</Text>
@@ -153,8 +184,6 @@ const styles = StyleSheet.create({
 
 const bg_path = "M 156 77 l -49.2 -85.8 c -8.5 -14.8 -22.2 -14.8 -30.7 0 L 32 77 H 156 z"
 
-function RootTabScreenProps<T>(): any {
-  throw new Error('Function not implemented.');
-}
+
 // "M138.592,123.612c17.037,0,23.98-11.982,15.504-26.761l-49.188-85.768c-8.477-14.778-22.208-14.778-30.677,0L25.036,96.851   c-8.474,14.778-1.533,26.761,15.503,26.761H138.592z"
 

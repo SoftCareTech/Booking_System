@@ -16,10 +16,41 @@ import Svg, {
 } from 'react-native-svg';
 import { BtnDefault } from '../components/btn';
 import { RootStackScreenProps } from '../types';
-import React from 'react';
+import React, { useState } from 'react';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const mobileWidth = 400
 export default function SignupScreen({ navigation }: RootStackScreenProps<'Signin'>) {
+
+
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const signup = async () => {
+    try {
+      if (email.includes("@") && password) {
+        const jsonValue = JSON.stringify({ email, password })
+        console.log(jsonValue)
+        await AsyncStorage.setItem('credential', jsonValue)
+        navigation.replace('RootTab', { screen: 'Search' })
+      } else {
+        setError("Must include @")
+      }
+
+    } catch (e) {
+      setError("Error occure: ")
+    }
+
+
+  }
+
+
+
+
+
+
+
   return (<ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
 
     <View style={styles.container}>
@@ -49,17 +80,19 @@ export default function SignupScreen({ navigation }: RootStackScreenProps<'Signi
 
         <View style={styles.containerI}>
           <Text style={styles.textL}>Email</Text>
-          <TextInput style={styles.textI} underlineColorAndroid={color.black} />
+          <TextInput style={styles.textI} value={email} onChangeText={setEmail}
+            underlineColorAndroid={color.black} />
 
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
             <Text style={styles.textL}>Password</Text>
 
           </View>
           <TextInput style={styles.textI} autoCorrect={false}
+            value={password} onChangeText={setPassword}
             secureTextEntry underlineColorAndroid={color.black} />
-          <BtnDefault title='Sign Up' style={styles.btn} />
+          <BtnDefault title='Sign Up' style={styles.btn} onPress={() => signup()} />
         </View>
-
+        <Text style={{ width: "100%", alignSelf: "center", textAlign: "center", color: "red", justifyContent: "center", alignItems: "center" }}>{error}</Text>
         <Text style={styles.text}>Or Continue with</Text>
         <View style={styles.containerRow}>
           <View style={styles.containerRow_}>
