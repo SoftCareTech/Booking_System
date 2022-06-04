@@ -20,7 +20,7 @@ export type RootStackParamList = {
 };
 
 export type AppointmentStackParamList = {
-  Appointment: undefined; //make Appointment
+  MakeAppointment: undefined; //make Appointment
   Payment: undefined;
   Note: undefined;
   ViewAppointments: undefined;

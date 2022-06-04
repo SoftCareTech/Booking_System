@@ -21,10 +21,10 @@ const ItemNurse = ({ name = "Aondohemba", amt = 343, sub = "gbenge", sym = "$" }
 export default function TabSearchScreen({ navigation }: RootTabScreenProps<'Search'>) {
   const data = [{ name: "Seun Olumide", desc: "Gbagada", amt: 250 },
   { name: "Seun Olumide 1", desc: "Gbagada", amt: 250, },
-  { name: "Seun Olumide 2", desc: "Gbagada", amt: 250, },
-  { name: "Seun Olumide 3", desc: "Gbagada", amt: 250, },
-  { name: "Seun Olumide 4", desc: "Gbagada", amt: 250, },
-  { name: "Seun Olumide 5", desc: "Gbagada", amt: 250, },
+  { name: "Seun Olumide 2", desc: "Gbagada", amt: 350, },
+  { name: "Seun Olumide 3", desc: "Gbagada", amt: 450, },
+  { name: "Seun Olumide 4", desc: "Gbagada", amt: 650, },
+  { name: "Seun Olumide 5", desc: "Gbagada", amt: 200, },
   { name: "Raphael G.A", desc: "Gbenge", amt: 300, },
   { name: "Raymond G.A.R.", desc: "Aondoakulsa", amt: 250, },
   ]

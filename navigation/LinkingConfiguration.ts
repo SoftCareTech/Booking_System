@@ -13,28 +13,23 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Welcome: "welcome:name?",
+      Welcome: "welcome/:name?",
       Signin: "signin",
-      Signup: "/signup",
-      PaystackWebView: "PaystackWebView:/url",
-
-      Root: {
+      Signup: "signup",
+      PaystackWebView: "paystackweb/:url",
+      RootTab: {
         screens: {
-          Home: 'Home',
-          Search: 'Search',
+          Home: 'home',
+          Search: 'search',
           Appointment: {
             screens: {
-              Appointment: {
-                screens: {
-                  PaymentScreen: "Appointment",
-
-                  Payment: "Payment",
-                  Note: "Note",
-                  ViewAppointments: "ViewAppointments"
-                }
-              }
+              MakeAppointment: "make_appointment",
+              Payment: "payment",
+              Note: "done_appointment",
+              ViewAppointments: "view_appointments"
             }
           }
+
         }
       },
 

@@ -1,23 +1,20 @@
-import { ScrollView, StyleSheet, TextInput } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
 import React, { useState } from 'react';
-import { Entypo, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { Ionicons, } from '@expo/vector-icons';
+import { AppointmettStackScreenProps } from '../types';
 
-export default function AppointmentDoneScreen() {
+export default function AppointmentDoneScreen({ navigation }: AppointmettStackScreenProps<"Note">) {
 
-  const merchantList = [
-    { name: "Master Card" },
-    { name: "Verve Card" },
-    { name: "Vista Card" },
-  ]
-  const [merchant, setMerchant] = useState("Master Card")
   return (
     <View style={styles.container}>
-      <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+      <Pressable onPress={() => navigation.replace("RootTab", { screen: "Search" })}>
+        <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+      </Pressable>
       <View style={styles.itemCol}>
         <View style={styles.itemCol}>
           <View style={{ justifyContent: "center", alignItems: "center" }} >
@@ -26,7 +23,8 @@ export default function AppointmentDoneScreen() {
           </View>
         </View>
         <View style={styles.conDis}>
-          <BtnText style={styles.inputDis} title={"View Appointments"} />
+          <BtnText style={styles.inputDis} title={"View Appointments"}
+            onPress={() => navigation.replace("RootTab", { screen: "Appointment", params: { screen: 'ViewAppointments' } })} />
         </View>
 
       </View>

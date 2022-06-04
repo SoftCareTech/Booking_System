@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { BtnDefault, BtnText, card } from '../components/btn';
@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Agenda } from 'react-native-calendars';
 import { month } from './TabApointmentScreen';
+import { AppointmettStackScreenProps } from '../types';
 
 const Item = ({ name = "Raph", time = "0:00", status = false }) => {
 
@@ -20,7 +21,7 @@ const Item = ({ name = "Raph", time = "0:00", status = false }) => {
   </View>
 }
 
-export default function ViewAppointmentScreen() {
+export default function ViewAppointmentScreen({ navigation }: AppointmettStackScreenProps<"ViewAppointments">) {
 
   const date = new Date()
 
@@ -125,7 +126,10 @@ export default function ViewAppointmentScreen() {
 
   return (
     <View style={styles.container}>
-      <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+      <Pressable onPress={() => navigation.replace("RootTab", { screen: "Search" })}>
+        <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+
+      </Pressable>
       <View style={styles.main}>
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
           <View style={{ paddingBottom: 4 }}>
@@ -138,12 +142,12 @@ export default function ViewAppointmentScreen() {
           <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} onPress={undefined} />
 
         </View>
-        <View style={{ flex: 1, backgroundColor: "red" }}>
+        <View style={{ flex: 1, }}>
           {showCalender()}
         </View>
 
         <View style={styles.conDis}>
-          <BtnText style={styles.inputDis} title={"View Appointments"} />
+          <BtnText style={styles.inputDis} title={"Add Appointment"} />
         </View>
       </View>
 

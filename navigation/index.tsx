@@ -39,7 +39,7 @@ eas build -p android --profile apk
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      // linking={LinkingConfiguration}
+      linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
@@ -52,7 +52,7 @@ const StackAppointment = createNativeStackNavigator<AppointmentStackParamList>()
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <RootStack.Navigator initialRouteName={'Signin'}  >
+    <RootStack.Navigator initialRouteName={'Welcome'}  >
       <RootStack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
         <RootStack.Screen name="Welcome" component={WelcomeScreen} />
         <RootStack.Screen name="Signin" component={SigninScreen} />
@@ -72,7 +72,7 @@ function AppointmentNavigator() {
   return (
     <StackAppointment.Navigator  >
       <StackAppointment.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
-        <StackAppointment.Screen name="Appointment" component={TabAppointmentScreen} options={{ headerShown: false }} />
+        <StackAppointment.Screen name="MakeAppointment" component={TabAppointmentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Payment" component={PaymentScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="Note" component={AppointmentDoneScreen} options={{ headerShown: false }} />
         <StackAppointment.Screen name="ViewAppointments" component={ViewAppointmentScreen} options={{ headerShown: false }} />

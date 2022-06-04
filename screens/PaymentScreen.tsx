@@ -9,10 +9,23 @@ import React, { useRef, useState } from 'react';
 import { Entypo, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { WebView } from 'react-native-webview';
- 
+import { AppointmettStackScreenProps, RootStackScreenProps } from '../types';
 
-export default function PaymentScreen() {
 
+export default function PaymentScreen({ navigation }: AppointmettStackScreenProps<"Payment">) {
+  const pay = () => {
+    //make request to my back with  email and ammout
+    /* E.g
+    const params = JSON.stringify({
+       "email": "gbengerapharl@email.com",
+       "amount": "20000"
+     })*/
+    /// get Payment refernce url
+    //https://checkout.paystack.com/balhibqcs4jxnvs
+    const authorization_url = 'https://checkout.paystack.com/balhibqcs4jxnvs';
+    navigation.navigate("PaystackWebView", { url: authorization_url })
+
+  }
   const merchantList = [
     { name: "Master Card" },
     { name: "Verve Card" },
@@ -23,39 +36,10 @@ export default function PaymentScreen() {
   const [errorMsg, setErrorMsg] = useState("")
   const paystackWebViewRef = useRef<paystackProps.PayStackRef>();
 
-  const params = JSON.stringify({
-    "email": "customer@email.com",
-    "amount": "20000"
-  })
-  const options = {
-    hostname: 'api.paystack.co',
-    port: 443,
-    path: '/transaction/initialize',
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer pk_test_dc3af5c32c444790b0ec4d0a7fad69fb3fb4fb5e',
-      'Content-Type': 'application/json'
-    }
-  }
-
-  const authorization_url = 'https://checkout.paystack.com/luKuasMan';
-  const callback_url = 'https://yourcallback.com';
   return (
     <View style={styles.container}>
       <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
-      <Paystack
-        paystackKey="pk_test_dc3af5c32c444790b0ec4d0a7fad69fb3fb4fb5e"
-        amount={"" + amount}
-        billingEmail="gbengeraphael@gmail.com"
-        activityIndicatorColor="green"
-        onCancel={(e: any) => {
-          console.log(e)
-        }}
-        onSuccess={(res: any) => {
-          console.log(res)
-        }}
-        ref={paystackWebViewRef}
-      />
+
       <ScrollView>
         <View style={{ paddingTop: 16 }}>
           <Text style={[styles.text, { fontWeight: '700' }]}>Payment Method</Text>
@@ -117,7 +101,7 @@ export default function PaymentScreen() {
 
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <BtnDefault style={styles.pay} title={"Pay"}
-          onPress={() => paystackWebViewRef.current.startTransaction()} />
+          onPress={() => pay()} />
       </View>
     </View>
   );

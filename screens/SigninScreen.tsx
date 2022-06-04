@@ -24,6 +24,7 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
   const [password, setPassword] = useState("test")
   const [error, setError] = useState("")
   const signin = async () => {
+
     try {
       const jsonValue = await AsyncStorage.getItem('credential')
       const data = jsonValue != null ? JSON.parse(jsonValue) : null;
