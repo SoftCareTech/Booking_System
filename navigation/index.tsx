@@ -19,7 +19,7 @@ import SignupScreen from '../screens/SignupScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabHomeScreen from '../screens/TabHomeScreen';
 import TabSearchScreen from '../screens/TabSearchScreen';
-import TabAppointmentScreen from '../screens/TabApointmentScreen';
+import TabAppointmentScreen from '../screens/MakeApointmentScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 

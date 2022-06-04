@@ -12,7 +12,7 @@ declare global {
 export type RootStackParamList = {
   RootTab: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  ViewNurse: { name: string; desc: string; amt: number; };
+  ViewNurse: { appId: string; name: string; desc: string; amt: number; };
   Signin: undefined;
   Signup: undefined;
   Welcome: undefined;
@@ -20,8 +20,8 @@ export type RootStackParamList = {
 };
 
 export type AppointmentStackParamList = {
-  MakeAppointment: undefined; //make Appointment
-  Payment: undefined;
+  MakeAppointment: { appId: string; amt: number };
+  Payment: { appId: string; amt: number };
   Note: undefined;
   ViewAppointments: undefined;
 };
@@ -44,8 +44,3 @@ export type AppointmettStackScreenProps<Screen extends keyof AppointmentStackPar
   = CompositeScreenProps<NativeStackScreenProps<AppointmentStackParamList, Screen>,
     CompositeScreenProps<BottomTabScreenProps<RootTabParamList>,
       NativeStackScreenProps<RootStackParamList>>>;
-
-export type PAS = CompositeScreenProps<
-  NativeStackScreenProps<AppointmentStackParamList, 'Appointment'>,
-  NativeStackScreenProps<RootStackParamList>
->;

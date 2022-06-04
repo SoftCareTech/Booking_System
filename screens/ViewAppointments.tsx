@@ -6,7 +6,7 @@ import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Agenda } from 'react-native-calendars';
-import { month } from './TabApointmentScreen';
+import { month } from './MakeApointmentScreen';
 import { AppointmettStackScreenProps } from '../types';
 
 const Item = ({ name = "Raph", time = "0:00", status = false }) => {

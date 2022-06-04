@@ -10,7 +10,7 @@ import { RootStackParamList, RootStackScreenProps } from '../types';
 export default function WelcomeScreen({ navigation }: RootStackScreenProps<'Welcome'>) {
   useFocusEffect(
     React.useCallback(() => {
-      setTimeout(() => { navigation.navigate('Signin') }, 3000)
+      setTimeout(() => { navigation.replace('Signin') }, 3000)
 
     }, [])
   );
@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
     flex: 1,
-    alignItems: Dimensions.get('window').width > 345 ? 'center' : "flex-end",
-    justifyContent: 'flex-start',
+
   },
   containerCenter: {
     flex: 1,
@@ -52,6 +51,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginHorizontal: 16,
     textAlign: "right"
+    , width: "100%",
+    paddingEnd: 32
   },
   subTitle: {
     fontSize: 20,

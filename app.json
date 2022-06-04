@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Book_System",
-    "slug": "Book_System",
+    "name": "Booking_System",
+    "slug": "Booking_System",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/ico_lox.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -26,10 +26,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.raphray.Book_System"
+      "package": "com.raphray.Booking_System"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/ico_lox.png"
     }
   }
 }

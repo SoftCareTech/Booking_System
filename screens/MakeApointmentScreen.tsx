@@ -53,8 +53,10 @@ export const day = (day: number) => day === 0 ? "Monday" : day === 1 ? "Tuesday"
   day === 2 ? "Wednesday" : day === 3 ? "Thursday"
     : day === 4 ? "Friday" : day === 5 ? "Saturday" : day === 6 ? "Sunday" : "None"
 
-export default function TabAppointmentScreen({ navigation }:
-  AppointmettStackScreenProps<"Appointment">) {
+export default function TabAppointmentScreen({ navigation, route }:
+  AppointmettStackScreenProps<"MakeAppointment">) {
+  const userData = route.params
+
   const date = new Date()
 
   const showCalender = () => {
@@ -251,8 +253,8 @@ export default function TabAppointmentScreen({ navigation }:
           </View>
           <View style={styles.actionCon}>
             <View style={{ flex: 1, marginRight: 8, }}>
-              <BtnDefault title={"Shedule"} style={styles.btn} onPress={() =>
-                navigation.replace("Payment")} /></View>
+              <BtnDefault title={"Schedule"} style={styles.btn} onPress={() =>
+                navigation.replace("Payment", { appId: userData.appId, amt: userData.amt })} /></View>
             <View style={{ flex: 1, marginLeft: 8 }}>
               <BtnDefault style={[styles.btn, {
                 color: color.blue, backgroundColor: "transparents"

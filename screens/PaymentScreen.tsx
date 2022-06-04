@@ -1,6 +1,6 @@
 
 import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, TextInput } from 'react-native';
+import { Alert, Linking, Platform, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, card } from '../components/btn';
@@ -11,8 +11,11 @@ import { WebView } from 'react-native-webview';
 import { AppointmettStackScreenProps, RootStackScreenProps } from '../types';
 
 
-export default function PaymentScreen({ navigation }: AppointmettStackScreenProps<"Payment">) {
-  const pay = () => {
+export default function PaymentScreen({ navigation, route }: AppointmettStackScreenProps<"Payment">) {
+
+  const amount = route.params.amt
+  const quantity = 1
+  const pay = async () => {
     //make request to my back with  email and ammout
     /* E.g
     const params = JSON.stringify({
@@ -21,8 +24,19 @@ export default function PaymentScreen({ navigation }: AppointmettStackScreenProp
      })*/
     /// get Payment refernce url
     //https://checkout.paystack.com/balhibqcs4jxnvs
+
+
     const authorization_url = 'https://checkout.paystack.com/balhibqcs4jxnvs';
-    navigation.navigate("PaystackWebView", { url: authorization_url })
+    if (Platform.OS === 'web') {
+      const supported = await Linking.canOpenURL(authorization_url);
+      if (supported) {
+        await Linking.openURL(authorization_url);
+      } else {
+        Alert.alert(`Unableto open this URL: ${authorization_url}`);
+      }
+    }
+    else
+      navigation.navigate("PaystackWebView", { url: authorization_url })
 
   }
   const merchantList = [
@@ -30,16 +44,17 @@ export default function PaymentScreen({ navigation }: AppointmettStackScreenProp
     { name: "Verve Card" },
     { name: "Vista Card" },
   ]
-  let amount = 250
   const [merchant, setMerchant] = useState("Master Card")
   const [errorMsg, setErrorMsg] = useState("")
-  const paystackWebViewRef = useRef<paystackProps.PayStackRef>();
 
   return (
     <View style={styles.container}>
-      <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
+      <Pressable onPress={() => navigation.jumpTo("Search")}>
+        <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
 
-      <ScrollView>
+      </Pressable>
+
+      <ScrollView style={{ paddingBottom: 32 }}>
         <View style={{ paddingTop: 16 }}>
           <Text style={[styles.text, { fontWeight: '700' }]}>Payment Method</Text>
           <View style={[styles.itemRow, { ...card, padding: 8, borderRadius: 10, backgroundColor: color.gray }]}>
@@ -77,14 +92,14 @@ export default function PaymentScreen({ navigation }: AppointmettStackScreenProp
           <View style={[card, styles.itemRow, { alignItems: 'center', paddingBottom: 16 }]}>
             <View style={styles.itemCol} >
               <Text style={styles.text}>Seun</Text>
-              <Text style={styles.text}>250</Text>
+              <Text style={styles.text}>${amount}</Text>
             </View>
             <Text style={styles.text}>1</Text>
           </View>
 
           <View style={styles.itemRow}>
             <Text style={styles.text}>Total</Text>
-            <Text style={styles.text}>$250</Text>
+            <Text style={styles.text}>${amount * quantity}</Text>
           </View>
 
           <View style={styles.conDis}>

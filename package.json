@@ -1,5 +1,5 @@
 {
-  "name": "book_system",
+  "name": "booking_system",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {

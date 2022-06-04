@@ -16,6 +16,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Welcome: "welcome/:name?",
       Signin: "signin",
       Signup: "signup",
+      ViewNurse: "view_nurse/:appId?/:name/:desc/:amt",
       PaystackWebView: "paystackweb/:url",
       RootTab: {
         screens: {
@@ -23,8 +24,8 @@ const linking: LinkingOptions<RootStackParamList> = {
           Search: 'search',
           Appointment: {
             screens: {
-              MakeAppointment: "make_appointment",
-              Payment: "payment",
+              MakeAppointment: "make_appointment/:appId:amt?",
+              Payment: "payment/:appId/:amt?",
               Note: "done_appointment",
               ViewAppointments: "view_appointments"
             }

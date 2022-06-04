@@ -57,8 +57,12 @@ const Comment = ({ src = null, name = "", text = "ooh" }) => {
 
 
 
-export default function ViewNurseScreen({ navigation }: RootStackScreenProps<"ViewNurse">) {
+export default function ViewNurseScreen({ navigation, route }: RootStackScreenProps<"ViewNurse">) {
 
+  const userProfile = {
+    ...route.params, name: route.params.name.replaceAll("%20", " ")
+  }
+  console.log(userProfile)
   const comments = [
     {
       id: "er1", name: "Anonymous Feedback",
@@ -83,7 +87,7 @@ export default function ViewNurseScreen({ navigation }: RootStackScreenProps<"Vi
         <Zocial name="email" size={24} color={color.blue} />
       </View>
       <ScrollView>
-        <Profile name='Seun olumide' sub='Nurse' participant={"345+"} src={img} />
+        <Profile name={userProfile.name} sub='Nurse' participant={"345+"} src={img} />
         <View style={styles.itemRow}>
           <TextDetail number={124} text={"Articles"} />
           <TextDetail number={124} text={"Following"} />
@@ -117,7 +121,14 @@ export default function ViewNurseScreen({ navigation }: RootStackScreenProps<"Vi
 
       <BtnDefault style={{ backgroundColor: color.blue }}
         title={"Make an Appointment"}
-        onPress={() => navigation.replace("RootTab", { screen: "Appointment" })} />
+        onPress={() => navigation.replace("RootTab", {
+          screen: "Appointment",
+          params: {
+            screen: 'MakeAppointment', params: {
+              amt: userProfile.amt, appId: userProfile.appId
+            }
+          }
+        })} />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
