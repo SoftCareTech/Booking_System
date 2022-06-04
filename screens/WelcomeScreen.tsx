@@ -1,8 +1,8 @@
-import { Pressable, StyleSheet } from 'react-native';
 import React, { useCallback } from "react"
+import { Pressable, StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, } from '../components/Themed';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import img from '../assets/images/img_welcome.png'
 import { RootStackParamList, RootStackScreenProps } from '../types';
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: Dimensions.get('window').width > 345 ? 'center' : "flex-end",
     justifyContent: 'flex-start',
   },
   containerCenter: {

@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import React, { useState } from 'react';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Agenda } from 'react-native-calendars';
 import { month } from './TabApointmentScreen';

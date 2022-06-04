@@ -1,6 +1,7 @@
+import React from 'react';
 import { FontAwesome, FontAwesome5, Ionicons, Zocial } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+
 import { Platform, StyleSheet, Image, ScrollView, FlatList, Pressable } from 'react-native';
 import { BtnDefault, card } from '../components/btn';
 

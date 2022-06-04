@@ -1,11 +1,10 @@
-import { ScrollView, StyleSheet, TextInput } from 'react-native';
 
+import React, { useRef, useState } from 'react';
+import { ScrollView, StyleSheet, TextInput } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import PaystackWebView, { Paystack, paystackProps } from 'react-native-paystack-webview';
 import { BtnDefault, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import React, { useRef, useState } from 'react';
 import { Entypo, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { WebView } from 'react-native-webview';

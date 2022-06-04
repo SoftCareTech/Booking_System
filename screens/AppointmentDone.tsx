@@ -1,10 +1,9 @@
-import { Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
+import React, { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import React, { useState } from 'react';
 import { Ionicons, } from '@expo/vector-icons';
 import { AppointmettStackScreenProps } from '../types';
 

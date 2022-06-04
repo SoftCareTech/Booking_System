@@ -1,3 +1,5 @@
+
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   Dimensions, Platform, StyleSheet, TextInput, ScrollView,
@@ -16,8 +18,6 @@ import Svg, {
 } from 'react-native-svg';
 import { BtnDefault } from '../components/btn';
 import { RootStackScreenProps } from '../types';
-import React, { useState } from 'react';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const mobileWidth = 400
 export default function SignupScreen({ navigation }: RootStackScreenProps<'Signin'>) {

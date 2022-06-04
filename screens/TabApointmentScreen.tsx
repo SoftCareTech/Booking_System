@@ -1,4 +1,4 @@
-
+import React, { useState } from 'react';
 import img from '../assets/images/user1.png'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -6,7 +6,7 @@ import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
 import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+
 import { Agenda, Calendar } from 'react-native-calendars';
 
 import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates'

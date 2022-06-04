@@ -1,5 +1,5 @@
-import { StyleSheet, FlatList, Image, TouchableHighlight } from 'react-native';
 import React from 'react';
+import { StyleSheet, FlatList, Image, TouchableHighlight } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
