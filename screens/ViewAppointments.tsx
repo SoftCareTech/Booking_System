@@ -57,56 +57,47 @@ export default function ViewAppointmentScreen({ navigation }: AppointmettStackSc
     return <Agenda
       hideExtraDays={true}
       items={items}
-      // Callback that gets called when items for a certain month should be loaded (month became visible)
-      loadItemsForMonth={month => {
-        // console.log('trigger items loading', month);
-      }}
-      // Callback that fires when the calendar is opened or closed
+      loadItemsForMonth={month => { }}
       onCalendarToggled={calendarOpened => {
         console.log("calendarOpened", calendarOpened);
       }}
-      // Callback that gets called on day press
       onDayPress={day => {
         setSelected(day.dateString)
       }}
-      // Callback that gets called when day changes while scrolling agenda list
       onDayChange={day => {
-        // 
         console.log('day changed', day);
       }}
       selected={selected}
       pastScrollRange={50}
       futureScrollRange={50}
       renderItem={(item, firstItemInDay) => {
-        return <View> <Item name={item?.name} time={item?.time} status={item?.status} />  </View>;
+        return <View>
+          <Item name={item?.name} time={item?.time} status={item?.status} />
+        </View>
       }}
       renderDay={(day, item) => {
-        return <View style={{ height: "100%", alignItems: "center", paddingEnd: 50, justifyContent: "space-around" }} >
+        return <View style={{
+          height: "100%", alignItems: "center", paddingEnd: 50,
+          justifyContent: "space-around"
+        }} >
           <MaterialCommunityIcons name="circle-slice-8" size={15} color={color.green} />
           <View style={{ height: "50%", width: 4, backgroundColor: color.green, }} />
         </View>
 
       }}
-      // Specify how empty date content with no items should be rendered
       renderEmptyDate={() => {
         return <View />;
       }}
-      // markedDates={{ '2022-04-15': { selected: true, marked: true }, }}
-
-
       renderEmptyData={() => {
         return <View><Text>`</Text></View>;
       }}
-      // Specify your item comparison function for increased performance
       rowHasChanged={(r1, r2) => {
         return r1.text !== r2.text;
       }}
       firstDay={3}
       hideKnob={false}
-      // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
       showClosingKnob={true} onRefresh={() => console.log('refreshing...')}
       refreshing={false}
-      // Agenda theme
       theme={{
         backgroundColor: '#ffffff',
         agendaDayTextColor: 'yellow',
@@ -114,7 +105,6 @@ export default function ViewAppointmentScreen({ navigation }: AppointmettStackSc
         agendaTodayColor: 'red',
         agendaKnobColor: 'blue'
       }}
-      // Agenda container style
       style={{ flex: 2, height: "100%", }}
     />
   }
@@ -168,6 +158,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  inputDis: {
+    textAlign: 'center'
+    , textAlignVertical: "center"
+    , fontSize: 20, height: 50
+    , width: '100%'
+
   },
 
   item: {

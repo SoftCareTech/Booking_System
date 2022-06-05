@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { View } from '../components/Themed';
+import { View, Text } from '../components/Themed';
 import { RootStackScreenProps } from '../types';
 export default function PaystackWebView({ route, navigation }: RootStackScreenProps<"PaystackWebView">) {
 
@@ -13,7 +13,7 @@ export default function PaystackWebView({ route, navigation }: RootStackScreenPr
 
     const { url } = state;
     if (!url) return;
-    if (url === callback_url) {
+    if (url.includes(callback_url)) {
       // get transaction reference from url and verify transaction, then redirect
       // const redirectTo = 'window.location = "' + callback_url + '"';
       // this.webview.injectJavaScript(redirectTo);
@@ -23,9 +23,12 @@ export default function PaystackWebView({ route, navigation }: RootStackScreenPr
     console.log("State Change")
   };
 
-  return (<WebView
-    style={{ height: "100%", width: "100%" }}
+  return (<View style={{ flex: 1 }}><WebView
+    style={{ height: "95%", width: "100%", marginVertical: 32, flex: 2 }}
     source={{ uri: authorization_url }}
-    onNavigationStateChange={onNavigationStateChange} />)
+    onNavigationStateChange={onNavigationStateChange} />
+    <Text style={{ padding: 16, textAlign: "center" }}>Note if refernce is used you can purchased again, implenting
+      the backend for query refernce pin will remove this</Text>
+  </View>)
 
 }

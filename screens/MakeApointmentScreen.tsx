@@ -243,7 +243,7 @@ export default function TabAppointmentScreen({ navigation, route }:
                 navigation.replace("Payment", { appId: userData.appId, amt: userData.amt })} /></View>
             <View style={{ flex: 1, marginLeft: 8 }}>
               <BtnDefault style={[styles.btn, {
-                color: color.blue, backgroundColor: "transparents"
+                color: color.blue, backgroundColor: color.white
               }]}
                 title={"Cancel"} onPress={() => {
                   navigation.replace("RootTab", { screen: "Search" })

@@ -19,9 +19,10 @@ import SignupScreen from './SignupScreen';
 const mobileWidth = 400
 export default function SigninScreen({ navigation }: RootStackScreenProps<'Signin'>) {
 
-
-  const [email, setEmail] = useState("test@gmail.com")
-  const [password, setPassword] = useState("test")
+  const defaultE = "test@gmail.com"
+  const defaultP = "test"
+  const [email, setEmail] = useState(defaultE)
+  const [password, setPassword] = useState(defaultP)
   const [error, setError] = useState("")
   const signin = async () => {
 
@@ -34,7 +35,12 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
           navigation.replace('RootTab', { screen: 'Search' })
           return
         }
-      }
+      } else
+        if (email == defaultE && password == defaultP) {
+          console.log("Using defaul, App may not Signin")
+          navigation.replace('RootTab', { screen: 'Search' })
+          return
+        }
       setError("User not found: Register a user| Only one user per device|local test mode")
     } catch (e) {
       setError("Error occure: Register a user| Only one user per device")
@@ -43,7 +49,7 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
 
   }
   return (<ScrollView
-    showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
+    showsVerticalScrollIndicator={Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth : false}>
 
     <View style={styles.container}>
       <View style={{
@@ -63,10 +69,8 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
         flex: 1,
         padding: 32,
         paddingTop: 0,
-        alignItems: Dimensions.get("screen").width > mobileWidth ? 'center' : undefined
+        alignItems: Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth ? 'center' : undefined : undefined
       }}>
-
-
         <View style={styles.containerI}>
           <Text style={styles.textL}>Email</Text>
           <TextInput style={styles.textI} value={email} onChangeText={setEmail}
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   image: {
     flex: -1,
     justifyContent: "center"
-    , height: Dimensions.get("screen").width > mobileWidth ? 80 : 200
+    , height: Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth ? 80 : 200 : 200
     , margin: -1
   },
   containerRow: {

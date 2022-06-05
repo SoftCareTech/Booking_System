@@ -59,8 +59,9 @@ const Comment = ({ src = null, name = "", text = "ooh" }) => {
 
 export default function ViewNurseScreen({ navigation, route }: RootStackScreenProps<"ViewNurse">) {
 
+  const aname = Platform.OS === "web" ? route.params.name.replaceAll("%20", " ") : route.params.name
   const userProfile = {
-    ...route.params, name: route.params.name.replaceAll("%20", " ")
+    ...route.params, name: aname
   }
   console.log(userProfile)
   const comments = [

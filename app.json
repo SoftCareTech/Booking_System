@@ -30,6 +30,8 @@
     },
     "web": {
       "favicon": "./assets/images/ico_lox.png"
-    }
+    },
+    "description": "Booking system for hiring nurses or workers. Currently, the app is at skeleton level with much of the designs ",
+    "githubUrl": "https://github.com/SoftCareTech/Booking_System"
   }
 }

@@ -26,12 +26,12 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
     //https://checkout.paystack.com/balhibqcs4jxnvs
 
 
-    const authorization_url = 'https://checkout.paystack.com/balhibqcs4jxnvs';
+    const authorization_url = 'https://checkout.paystack.com/f1xbjc08qve0zka';
     if (Platform.OS === 'web') {
       const supported = await Linking.canOpenURL(authorization_url);
       if (supported) {
         await Linking.openURL(authorization_url);
-      } else {
+      } else {s
         Alert.alert(`Unableto open this URL: ${authorization_url}`);
       }
     }
@@ -162,8 +162,9 @@ const styles = StyleSheet.create({
       'center', borderWidth: 2, borderStyle: "dashed",
   },
   pay: {
-    marginVertical: 8,
+    marginTop: 8,
     backgroundColor: color.blue
+    , marginBottom: 16
   },
 });
 

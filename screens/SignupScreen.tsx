@@ -43,7 +43,7 @@ export default function SignupScreen({ navigation }: RootStackScreenProps<'Signi
 
 
   return (
-    <ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
+    <ScrollView showsVerticalScrollIndicator={Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth : false}>
       <View style={styles.container}>
         <View style={{
           flexDirection: "row", backgroundColor: "transparent", alignItems: "center",
@@ -66,7 +66,7 @@ export default function SignupScreen({ navigation }: RootStackScreenProps<'Signi
           flex: 1,
           padding: 32,
           paddingTop: 0,
-          alignItems: Dimensions.get("screen").width > mobileWidth ? 'center' : undefined
+          alignItems: Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth ? 'center' : undefined : undefined
         }}>
 
 
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   image: {
     flex: -1,
     justifyContent: "center"
-    , height: Dimensions.get("screen").width > mobileWidth ? 80 : 200
+    , height: Platform.OS === "web" ? Dimensions.get("screen").width > mobileWidth ? 80 : 200 : 200
     , margin: -1
   },
   containerRow: {
