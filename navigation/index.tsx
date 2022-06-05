@@ -1,9 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-
 import * as React from 'react';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -31,11 +25,9 @@ import ViewAppointmentScreen from '../screens/ViewAppointments';
 import PaystackWebView from '../screens/PaystackWebViewScreen';
 import ViewNurseScreen from '../screens/ViewNurseScreen';
 
-/*eas whoiam
-eas login
-eas build:configure
-eas build -p android --profile apk
-*/
+
+//eas build -p android --profile apk 
+console.log(new Date())
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer

@@ -10,14 +10,15 @@ import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@ex
 import { Agenda, Calendar } from 'react-native-calendars';
 
 import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates'
-import { AppointmettStackScreenProps, PAS } from '../types';
+import { AppointmettStackScreenProps } from '../types';
 
-//import { Calendar } from 'react-native-paper-dates';
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
   return <View style={style ? [styles.item, style] : styles.item}>
     {src ? <Image source={src}
       style={{ height: 100, width: 100, borderRadius: 10 }} /> :
-      <View style={styles.item_ico_v} ><Text style={styles.item_ico_t}>{name[0]}</Text> </View>}
+      <View style={styles.item_ico_v} >
+        <Text style={styles.item_ico_t}>{name[0]}</Text>
+      </View>}
     <View style={styles.itemCol}>
       <Text style={styles.item_title}>{name}</Text>
       <Text style={styles.item_sub}>{sub}</Text>
@@ -32,12 +33,11 @@ export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = 
         </View>
       </View>
     </View>
-
   </View>
 }
 
 
-const Item = ({ src = null, title = "Cardiologist", sub = "Don Johnson" }) => <View style={{ width: '100%' }} >
+const Item = ({ src = null, title = "Cardiologist", sub = "Don Johnson" }) => (<View style={{ width: '100%' }} >
   <View style={[styles.card_, { marginVertical: 8 }]}>
     <View style={{ flex: 1, backgroundColor: color.bg1, }}>
       <Text>{title}</Text>
@@ -45,7 +45,7 @@ const Item = ({ src = null, title = "Cardiologist", sub = "Don Johnson" }) => <V
     </View>
     <Image source={src} style={{ height: 24, width: 24, borderRadius: 24 }} />
   </View>
-</View>
+</View>)
 export const month = (i: number) => i === 0 ? "Jan" : i === 1 ? "Feb" : i === 2 ? "March" : i === 3 ? "Apr" :
   i === 4 ? "May" : i === 5 ? "Jun" : i === 6 ? "Jul" : i === 7 ? "Aug" :
     i === 8 ? "Sep" : i === 9 ? "Oct" : i === 10 ? "Nov" : i === 11 ? "Dec" : "none" + i
@@ -74,62 +74,50 @@ export default function TabAppointmentScreen({ navigation, route }:
       }]
     }
     const [selected, setSelected] = useState("2022-05-12")
-    return <Agenda
-      //hideExtraDays={true}
-      items={items}
-      // Callback that gets called when items for a certain month should be loaded (month became visible)
-      loadItemsForMonth={month => {
-        // console.log('trigger items loading', month);
-      }}
-      // Callback that fires when the calendar is opened or closed
+    return <Agenda items={items}
+      loadItemsForMonth={month => { }}
       onCalendarToggled={calendarOpened => {
         console.log("calendarOpened", calendarOpened);
       }}
-      // Callback that gets called on day press
       onDayPress={day => {
         setSelected(day.dateString)
       }}
-      // Callback that gets called when day changes while scrolling agenda list
       onDayChange={day => {
-        // 
         console.log('day changed', day);
       }}
       selected={selected}
       pastScrollRange={50}
       futureScrollRange={50}
       renderItem={(item, firstItemInDay) => {
-        return <View> <Item title={item?.title} time={item?.time}
-          name={item?.name} src={item.src} />  </View>;
+        return <View>
+          <Item title={item?.title} time={item?.time} name={item?.name}
+            src={item.src} />
+        </View>
       }}
       renderDay={(day, item) => {
-        return <View style={{ height: "100%", alignItems: "center", paddingEnd: 50, justifyContent: "space-around" }} >
+        return (<View style={{
+          height: "100%", alignItems: "center",
+          paddingEnd: 50, justifyContent: "space-around"
+        }} >
           <Text>{item?.time}</Text>
-        </View>
-
+        </View>)
       }}
-      // Specify how empty date content with no items should be rendered
       renderEmptyDate={() => {
-        return <View />;
+        return (<View />)
       }}
-      // markedDates={{ '2022-04-15': { selected: true, marked: true }, }}
-
-      renderKnob={() => <View style={{
+      renderKnob={() => (<View style={{
         width: Dimensions.get('screen').width - 32,
         alignItems: "flex-start", flex: 1,
-      }}><Text style={styles.title} >Shedule Today</Text></View>}
+      }}><Text style={styles.title} >Shedule Today</Text>
+      </View>)}
       renderEmptyData={() => {
         return <View style={{ backgroundColor: "blue", height: 2, width: "100%" }} />
       }}
-      // Specify your item comparison function for increased performance
       rowHasChanged={(r1, r2) => {
         return r1.text !== r2.text;
-      }}
-      firstDay={3}
-      hideKnob={false}
-      // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
+      }} firstDay={3} hideKnob={false}
       showClosingKnob={true} onRefresh={() => console.log('refreshing...')}
       refreshing={false}
-      // Agenda theme
       theme={{
         backgroundColor: '#ffffff',
         agendaDayTextColor: 'yellow',
@@ -137,13 +125,11 @@ export default function TabAppointmentScreen({ navigation, route }:
         agendaTodayColor: 'red',
         agendaKnobColor: 'blue'
       }}
-      // Agenda container style
       style={{
         flex: 2,
         borderColor: 'gray',
         minHeight: 350
-      }}
-    />
+      }} />
   }
 
 
@@ -260,7 +246,6 @@ export default function TabAppointmentScreen({ navigation, route }:
                 color: color.blue, backgroundColor: "transparents"
               }]}
                 title={"Cancel"} onPress={() => {
-                  //if (navigation.canGoBack()) navigation.goBack()  else
                   navigation.replace("RootTab", { screen: "Search" })
                 }
                 } />

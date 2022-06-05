@@ -42,7 +42,8 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
 
 
   }
-  return (<ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
+  return (<ScrollView
+    showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
 
     <View style={styles.container}>
       <View style={{
@@ -55,14 +56,11 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
           <Text > Powered by Lox</Text></View>
 
       </View>
-
       <ImageBackground source={bga} resizeMode="stretch" style={styles.image}>
         <Text style={styles.title} >Login</Text>
       </ImageBackground>
-
-
       <View style={{
-        flex: 1, //borderTopLeftRadius: Dimensions.get("screen").width, borderTopRightRadius: Dimensions.get("screen").width,
+        flex: 1,
         padding: 32,
         paddingTop: 0,
         alignItems: Dimensions.get("screen").width > mobileWidth ? 'center' : undefined
@@ -115,7 +113,8 @@ export default function SigninScreen({ navigation }: RootStackScreenProps<'Signi
 
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View> </ScrollView >
+    </View>
+  </ScrollView >
   );
 }
 

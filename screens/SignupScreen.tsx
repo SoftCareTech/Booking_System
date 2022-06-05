@@ -21,9 +21,6 @@ import { RootStackScreenProps } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const mobileWidth = 400
 export default function SignupScreen({ navigation }: RootStackScreenProps<'Signin'>) {
-
-
-
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -41,84 +38,72 @@ export default function SignupScreen({ navigation }: RootStackScreenProps<'Signi
     } catch (e) {
       setError("Error occure: ")
     }
-
-
   }
 
 
 
+  return (
+    <ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
+      <View style={styles.container}>
+        <View style={{
+          flexDirection: "row", backgroundColor: "transparent", alignItems: "center",
+          justifyContent: "center", paddingVertical: 32
+        }
+        }>
+          <Image source={ico} style={{ height: 60, width: 60 }} />
+          <View style={{ backgroundColor: "transparent", alignItems: "flex-start" }}>
+            <Text style={[styles.title, { color: color.gray }]}>The test</Text>
+            <Text > Powered by Lox</Text></View>
 
-
-
-
-  return (<ScrollView showsVerticalScrollIndicator={Dimensions.get("screen").width > mobileWidth}>
-
-    <View style={styles.container}>
-      <View style={{
-        flexDirection: "row", backgroundColor: "transparent", alignItems: "center",
-        justifyContent: "center", paddingVertical: 32
-      }}>
-        <Image source={ico} style={{ height: 60, width: 60 }} />
-        <View style={{ backgroundColor: "transparent", alignItems: "flex-start" }}>
-          <Text style={[styles.title, { color: color.gray }]}>The test</Text>
-          <Text > Powered by Lox</Text></View>
-
-      </View>
-
-      <ImageBackground source={bga} resizeMode="stretch" style={styles.image}>
-        <Text style={styles.title} >SignUp</Text>
-      </ImageBackground>
-
-
-      <View style={{
-        flex: 1, //borderTopLeftRadius: Dimensions.get("screen").width, borderTopRightRadius: Dimensions.get("screen").width,
-        padding: 32,
-        paddingTop: 0,
-        alignItems: Dimensions.get("screen").width > mobileWidth ? 'center' : undefined
-      }}>
-
-
-        <View style={styles.containerI}>
-          <Text style={styles.textL}>Email</Text>
-          <TextInput style={styles.textI} value={email} onChangeText={setEmail}
-            underlineColorAndroid={color.black} />
-
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-            <Text style={styles.textL}>Password</Text>
-
-          </View>
-          <TextInput style={styles.textI} autoCorrect={false}
-            value={password} onChangeText={setPassword}
-            secureTextEntry underlineColorAndroid={color.black} />
-          <BtnDefault title='Sign Up' style={styles.btn} onPress={() => signup()} />
         </View>
-        <Text style={{ width: "100%", alignSelf: "center", textAlign: "center", color: "red", justifyContent: "center", alignItems: "center" }}>{error}</Text>
-        <Text style={styles.text}>Or Continue with</Text>
-        <View style={styles.containerRow}>
-          <View style={styles.containerRow_}>
-            <Image source={ico_g} style={{ height: 24, width: 24 }} />
-            <Text style={styles.text}>  Google</Text>
+        <ImageBackground source={bga}
+          resizeMode="stretch" style={styles.image}>
+          <Text style={styles.title} >SignUp</Text>
+        </ImageBackground>
+
+
+        <View style={{
+          flex: 1,
+          padding: 32,
+          paddingTop: 0,
+          alignItems: Dimensions.get("screen").width > mobileWidth ? 'center' : undefined
+        }}>
+
+
+          <View style={styles.containerI}>
+            <Text style={styles.textL}>Email</Text>
+            <TextInput style={styles.textI} value={email} onChangeText={setEmail}
+              underlineColorAndroid={color.black} />
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+              <Text style={styles.textL}>Password</Text>
+            </View>
+            <TextInput style={styles.textI} autoCorrect={false}
+              value={password} onChangeText={setPassword}
+              secureTextEntry underlineColorAndroid={color.black} />
+            <BtnDefault title='Sign Up' style={styles.btn} onPress={() => signup()} />
           </View>
-          <View style={styles.containerRow_}>
-            <FontAwesome5 name="facebook" size={24} color="blue" />
-            <Text style={styles.text}>  Facebook</Text>
+          <Text style={{ width: "100%", alignSelf: "center", textAlign: "center", color: "red", justifyContent: "center", alignItems: "center" }}>{error}</Text>
+          <Text style={styles.text}>Or Continue with</Text>
+          <View style={styles.containerRow}>
+            <View style={styles.containerRow_}>
+              <Image source={ico_g} style={{ height: 24, width: 24 }} />
+              <Text style={styles.text}>  Google</Text>
+            </View>
+            <View style={styles.containerRow_}>
+              <FontAwesome5 name="facebook" size={24} color="blue" />
+              <Text style={styles.text}>  Facebook</Text>
+            </View>
           </View>
+          <Pressable onPress={() => navigation.replace('Signin')}>
+            <View style={[styles.containerRow_, { backgroundColor: color.white }]}>
+              <Text style={styles.text}>Already have an account  </Text>
+              <Text style={[styles.text, { fontWeight: "bold" }]}>Log In</Text>
+            </View>
+          </Pressable>
         </View>
-        <Pressable onPress={() => navigation.replace('Signin')}>
-          <View style={[styles.containerRow_, { backgroundColor: color.white }]}>
-            <Text style={styles.text}>Already have an account  </Text>
-            <Text style={[styles.text, { fontWeight: "bold" }]}>Log In</Text>
-          </View>
-        </Pressable>
-
-
+        <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
       </View>
-
-
-
-
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View> </ScrollView >
+    </ScrollView>
   );
 }
 
