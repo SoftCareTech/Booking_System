@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import img from '../assets/images/user1.png'
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { BtnDefault, BtnText, card } from '../components/btn';
 import { color } from '../constants/Colors';
-import { Image, SliderBase, SliderComponent, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { Image, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Agenda, Calendar } from 'react-native-calendars';
-
-import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates'
 import { AppointmettStackScreenProps } from '../types';
+//import DateP from '../components/DateP';
+let DateP: any;
+try {
+  DateP = Platform.OS === "web" ? require("../components/DateP").default :
+    require("../components/DateP").default;
+
+} catch (e) {
+  DateP = require("../components/DateP").default;
+}
 
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
   return <View style={style ? [styles.item, style] : styles.item}>
@@ -106,7 +112,7 @@ export default function TabAppointmentScreen({ navigation, route }:
         return (<View />)
       }}
       renderKnob={() => (<View style={{
-        width: Dimensions.get('screen').width - 32,
+        width: Platform.OS === "web" ? Dimensions.get('screen').width - 32 : "95%",
         alignItems: "flex-start", flex: 1,
       }}><Text style={styles.title} >Shedule Today</Text>
       </View>)}
@@ -133,69 +139,13 @@ export default function TabAppointmentScreen({ navigation, route }:
   }
 
 
-  const formatDate = (date = new Date()) => day(date.getDay()) + ", " + month(date.getMonth()) + ", "
-    + date.getDate()
-  const formatTime = (h = 0, m = 0) => {
-    const s = (v = 0) => v > 9 ? v + "" : "0" + v
-    return s(h) + ":" + s(m)
+  const onDateChange = (date: Date) => {
+    console.log(date)
   }
-
-  const [visible, setVisible] = React.useState(false)
-  const [timeValue, setTimeValue] = React.useState(formatTime(date.getHours(), date.getMinutes()))
-  const [dateP, setDateP] = React.useState<Date | undefined>(date);
-  const [open, setOpen] = React.useState(false);
-
-  const onDismissSingle = React.useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
-
-  const onConfirmSingle = React.useCallback(
-    (params) => {
-      setOpen(false);
-      setDateP(params.date);
-    },
-    [setOpen, setDateP]
-  );
-
-
-
-  const onDismiss = React.useCallback(() => {
-    setVisible(false)
-  }, [setVisible])
-
-  const onConfirm = React.useCallback(
-    ({ hours, minutes }) => {
-      setVisible(false);
-      console.log({ hours, minutes });
-      setTimeValue(formatTime(hours, minutes))
-    },
-    [setVisible]
-  );
-
 
 
   return (
     <View style={styles.container}>
-
-      <DatePickerModal
-        locale="en"
-        mode="single"
-        visible={open}
-        onDismiss={onDismissSingle}
-        date={date}
-        onConfirm={onConfirmSingle}
-        validRange={{
-          startDate: new Date(),
-        }} />
-      <TimePickerModal
-        visible={visible}
-        onDismiss={onDismiss}
-        onConfirm={onConfirm}
-        hours={12}
-        minutes={14}
-        label="Select time"
-        uppercase={false}
-        animationType="fade" />
 
       <View style={{ width: '100%', flexDirection: 'row', justifyContent: "space-between" }} >
         <View style={{ paddingBottom: 4 }}>
@@ -206,7 +156,7 @@ export default function TabAppointmentScreen({ navigation, route }:
 
         </View>
         <BtnDefault title={"+ Add"}
-          style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} />
+          style={[styles.btn, { borderRadius: 25, paddingHorizontal: 32 }]} onPress={undefined} />
 
       </View>
       <View style={{ width: '100%', flex: 1 }} >
@@ -214,29 +164,16 @@ export default function TabAppointmentScreen({ navigation, route }:
       </View>
       <View>
         <ScrollView
-          showsVerticalScrollIndicator={Dimensions.get('screen').width >
-            Dimensions.get('screen').height}>
+          showsVerticalScrollIndicator={Platform.OS === "web" ? Dimensions.get('screen').width >
+            Dimensions.get('screen').height : false}>
           <View style={{ width: '100%' }} >
             <Text style={styles.title} >Reminder</Text>
             <Text>Don't foget to shedule fo upcoming appointment</Text>
           </View>
           <Profile1 name='Semo Olomide' name={"gbabaka"} style={{ flexDirection: "row-reverse" }} src={img} />
-          <View style={styles.dateCon}>
-            <Pressable onPress={() => setOpen(true)}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparents", }}>
-                <Ionicons name="md-calendar" size={24} color={color.blue} />
-                <Text style={[styles.item_sub, { fontWeight: "700", }]}> {formatDate(dateP)}</Text>
-              </View>
-            </Pressable>
-            <Pressable onPress={() => setVisible(true)}>
-              <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
-                <Ionicons name="time" size={24} color={color.blue} />
-                <Text style={[styles.item_sub, { fontWeight: "700", }]}> {timeValue}
-                </Text>
-              </View>
-            </Pressable>
 
-          </View>
+          <DateP date={date} onDateChange={onDateChange} />
+
           <View style={styles.actionCon}>
             <View style={{ flex: 1, marginRight: 8, }}>
               <BtnDefault title={"Schedule"} style={styles.btn} onPress={() =>

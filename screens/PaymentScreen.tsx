@@ -1,43 +1,55 @@
 
 import React, { useRef, useState } from 'react';
-import { Alert, Linking, Platform, Pressable, ScrollView, StyleSheet, TextInput } from 'react-native';
-import EditScreenInfo from '../components/EditScreenInfo';
+import { Alert, Linking, Platform, Pressable, ScrollView, Dimensions, StyleSheet, TextInput } from 'react-native';
+
 import { Text, View } from '../components/Themed';
 import { BtnDefault, card } from '../components/btn';
 import { color } from '../constants/Colors';
 import { Entypo, Ionicons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
-import { WebView } from 'react-native-webview';
+
+import api from '../api/pay';
+
+
 import { AppointmettStackScreenProps, RootStackScreenProps } from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator } from 'react-native-paper';
 
 
 export default function PaymentScreen({ navigation, route }: AppointmettStackScreenProps<"Payment">) {
-
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const amount = route.params.amt
   const quantity = 1
   const pay = async () => {
-    //make request to my back with  email and ammout
-    /* E.g
-    const params = JSON.stringify({
-       "email": "gbengerapharl@email.com",
-       "amount": "20000"
-     })*/
-    /// get Payment refernce url
-    //https://checkout.paystack.com/balhibqcs4jxnvs
+    try {
+      setError("")
+      if (loading) return
+      setLoading(true)
+      const jsonValue = await AsyncStorage.getItem('credential')
+      const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+      let email = "goodemail@gmail.com";
+      if (data != null) { email = data.email }
+      const result = await api.get("/pay/:" + email + "/" + amount)
 
-
-    const authorization_url = 'https://checkout.paystack.com/f1xbjc08qve0zka';
-    if (Platform.OS === 'web') {
-      const supported = await Linking.canOpenURL(authorization_url);
-      if (supported) {
-        await Linking.openURL(authorization_url);
-      } else {s
-        Alert.alert(`Unableto open this URL: ${authorization_url}`);
+      const authorization_url = result.data.data.authorization_url// 'https://checkout.paystack.com/f1xbjc08qve0zka';
+      if (true) return
+      if (Platform.OS === 'web') {
+        const supported = await Linking.canOpenURL(authorization_url);
+        if (supported) {
+          navigation.replace("RootTab", { screen: "Appointment", params: { screen: 'Note' } })
+          await Linking.openURL(authorization_url);
+        } else {
+          Alert.alert(`Unableto open this URL: ${authorization_url}`);
+        }
       }
+      else
+        navigation.navigate("PaystackWebView", { url: authorization_url })
+    } catch (e) {
+      setError("Error ocurred")
+      setLoading(false)
+      console.log(e)
     }
-    else
-      navigation.navigate("PaystackWebView", { url: authorization_url })
-
   }
   const merchantList = [
     { name: "Master Card" },
@@ -49,12 +61,20 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
 
   return (
     <View style={styles.container}>
+
       <Pressable onPress={() => navigation.jumpTo("Search")}>
         <Ionicons style={{ marginTop: 16 }} name="arrow-back-sharp" size={35} color="black" />
 
       </Pressable>
-
-      <ScrollView style={{ paddingBottom: 32 }}>
+      {loading ? <View>
+        <Text style={{
+          textAlign: "center", fontSize: 30, color: color.blue
+        }}>Loading </Text>
+        <ActivityIndicator size={"large"} color={color.blue} />
+      </View> : null}
+      <ScrollView showsVerticalScrollIndicator={Platform.OS === "web" ?
+        Dimensions.get("screen").width > 400 : false}
+        style={{ paddingBottom: 32 }}>
         <View style={{ paddingTop: 16 }}>
           <Text style={[styles.text, { fontWeight: '700' }]}>Payment Method</Text>
           <View style={[styles.itemRow, { ...card, padding: 8, borderRadius: 10, backgroundColor: color.gray }]}>
@@ -75,6 +95,7 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
             />
 
           </View>
+
           <View style={styles.itemRow}>
             <Text style={styles.text}>Order</Text>
             <View style={[styles.itemRow, { flex: -1 }]}>
@@ -108,8 +129,11 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
 
         </View>
 
-      </ScrollView>
-
+      </ScrollView >
+      <Text style={{
+        width: "100%", color: "red", alignSelf: "center", textAlign: 'center',
+        justifyContent: "center", alignItems: "center",
+      }}>{error}</Text>
       <Text style={styles.inputDis} > {errorMsg}</Text>
 
 
@@ -117,7 +141,7 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
         <BtnDefault style={styles.pay} title={"Pay"}
           onPress={() => pay()} />
       </View>
-    </View>
+    </View >
   );
 }
 

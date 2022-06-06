@@ -86,7 +86,7 @@ export default function ViewAppointmentScreen({ navigation }: AppointmettStackSc
 
       }}
       renderEmptyDate={() => {
-        return <View />;
+        return <View />
       }}
       renderEmptyData={() => {
         return <View><Text>`</Text></View>;
@@ -105,7 +105,11 @@ export default function ViewAppointmentScreen({ navigation }: AppointmettStackSc
         agendaTodayColor: 'red',
         agendaKnobColor: 'blue'
       }}
-      style={{ flex: 2, height: "100%", }}
+      style={{
+        flex: 2,
+        borderColor: 'gray',
+        minHeight: 350, height: "100%",
+      }}
     />
   }
 
@@ -132,7 +136,7 @@ export default function ViewAppointmentScreen({ navigation }: AppointmettStackSc
           <BtnDefault title={"+ Add"} style={[styles.btn, { borderRadius: 25, paddingHorizontal: 16 }]} onPress={undefined} />
 
         </View>
-        <View style={{ flex: 1, }}>
+        <View style={{ flex: 1, width: '100%' }}>
           {showCalender()}
         </View>
 

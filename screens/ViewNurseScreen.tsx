@@ -101,7 +101,7 @@ export default function ViewNurseScreen({ navigation, route }: RootStackScreenPr
           <View style={{ flex: 1, marginRight: 8, }}>
             <BtnDefault title={"Follow"} style={styles.btn} /></View>
           <View style={{ flex: 1, marginLeft: 8 }}>
-            <BtnDefault style={[styles.btn, { color: color.blue, backgroundColor: "transparents" }]} title={"Message"} />
+            <BtnDefault style={[styles.btn, { color: color.blue, backgroundColor: color.blue }]} title={"Message"} />
           </View>
         </View>
         <View style={[styles.itemRow, { marginVertical: 8 }]}>
