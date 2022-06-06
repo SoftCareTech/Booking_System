@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity,Platform } from 'react-native';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
 import Colors, { color } from '../constants/Colors';
@@ -73,13 +73,13 @@ export default function DateP({ date, onDateChange }: { date: Date, onDateChange
                 animationType="fade" />
 
             <View style={styles.dateCon}>
-                <Pressable onPress={() => setOpen(true)}>
+                <Pressable onPress={() => { if(Platform.OS=="web") setOpen(true)}}>
                     <View style={{ flexDirection: "row", backgroundColor: "transparents", }}>
                         <Ionicons name="md-calendar" size={24} color={color.blue} />
                         <Text style={[styles.item_sub, { fontWeight: "700", }]}> {formatDate(dateP)}</Text>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => setVisible(true)}>
+                <Pressable onPress={() => { if(Platform.OS=="web")setVisible(true)}}>
                     <View style={{ flexDirection: "row", backgroundColor: "transparents" }}>
                         <Ionicons name="time" size={24} color={color.blue} />
                         <Text style={[styles.item_sub, { fontWeight: "700", }]}> {timeValue}

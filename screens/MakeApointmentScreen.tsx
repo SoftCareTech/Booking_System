@@ -9,14 +9,12 @@ import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@ex
 import { Agenda, Calendar } from 'react-native-calendars';
 import { AppointmettStackScreenProps } from '../types';
 //import DateP from '../components/DateP';
-let DateP: any;
-try {
-  DateP = Platform.OS === "web" ? require("../components/DateP").default :
-    require("../components/DateP").default;
 
-} catch (e) {
-  DateP = require("../components/DateP").default;
-}
+ 
+import DateP  from '../components/DateP';
+
+
+
 
 export const Profile1 = ({ style = null, src = null, name = "Aondohemba", sub = "Nurse", participant = "0" }) => {
   return <View style={style ? [styles.item, style] : styles.item}>

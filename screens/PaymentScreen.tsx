@@ -30,11 +30,13 @@ export default function PaymentScreen({ navigation, route }: AppointmettStackScr
       const data = jsonValue != null ? JSON.parse(jsonValue) : null;
       let email = "goodemail@gmail.com";
       if (data != null) { email = data.email }
-      const result = await api.get("/pay/:" + email + "/" + amount)
+  
+console.log(amount)
+     const result = await api.get("/pay/:" + email + "/" + amount)
 
       const authorization_url = result.data.data.authorization_url// 'https://checkout.paystack.com/f1xbjc08qve0zka';
-      if (true) return
-      if (Platform.OS === 'web') {
+       setLoading(false)
+;       if (Platform.OS === 'web') {
         const supported = await Linking.canOpenURL(authorization_url);
         if (supported) {
           navigation.replace("RootTab", { screen: "Appointment", params: { screen: 'Note' } })
